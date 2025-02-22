@@ -1,10 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/domain/usecases/fetch_weather.dart';
+
+import '../../data/model/weather_response/weather_response.dart';
 
 class LocationProvider with ChangeNotifier {
   bool _isLoading = true;
   double _lattitude = 0.0;
   double _longitude = 0.0;
+  int _currentIndex = 0;
+
+  WeatherResponse? weatherResponse;
 
   set isLoading(bool isLoading) {
     _isLoading = isLoading;
@@ -21,9 +27,15 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set setCurrentIndex(int index) {
+    _currentIndex = index;
+    notifyListeners();
+  }
+
   bool checkLoading() => _isLoading;
   double getLattitude() => _lattitude;
   double getLongitude() => _longitude;
+  int getCurrentIndex() => _currentIndex;
 
   getLocation() async {
     bool isServiceEnabled;
@@ -53,9 +65,13 @@ class LocationProvider with ChangeNotifier {
     ).then((value) {
       setLattitude = value.latitude;
       setLongitude = value.longitude;
-      isLoading = false;
-      print("Latitude: ${value.latitude}");
-      print("Longitude: ${value.longitude}");
+      return FetchWeatherApi()
+          .processData(value.latitude, value.longitude)
+          .then((value) {
+            print(value);
+            weatherResponse = value;
+            isLoading = false;
+          });
     });
   }
 }
