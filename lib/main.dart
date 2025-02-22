@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'weather_app_evac_locator',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const SingleWeatherScreen(),
