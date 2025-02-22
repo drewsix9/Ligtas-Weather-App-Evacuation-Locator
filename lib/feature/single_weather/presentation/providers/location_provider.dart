@@ -1,17 +1,24 @@
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 
-class StateProvider with ChangeNotifier {
-  final bool _isLoading = true;
+class LocationProvider with ChangeNotifier {
+  bool _isLoading = true;
   double _lattitude = 0.0;
   double _longitude = 0.0;
 
-  void setLattitude(double lattitude) {
-    _lattitude = lattitude;
+  set isLoading(bool isLoading) {
+    _isLoading = isLoading;
+    notifyListeners();
   }
 
-  void setLongitude(double longitude) {
+  set setLattitude(double lattitude) {
+    _lattitude = lattitude;
+    notifyListeners();
+  }
+
+  set setLongitude(double longitude) {
     _longitude = longitude;
+    notifyListeners();
   }
 
   bool checkLoading() => _isLoading;
@@ -44,9 +51,11 @@ class StateProvider with ChangeNotifier {
     return await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     ).then((value) {
-      setLattitude(value.latitude);
-      setLongitude(value.longitude);
-      notifyListeners();
+      setLattitude = value.latitude;
+      setLongitude = value.longitude;
+      isLoading = false;
+      print("Latitude: ${value.latitude}");
+      print("Longitude: ${value.longitude}");
     });
   }
 }

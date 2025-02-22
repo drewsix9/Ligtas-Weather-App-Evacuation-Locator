@@ -38,6 +38,7 @@ dependencies:
   geocoding: ^3.0.0
   sleek_circular_slider: ^2.0.1
   provider: ^6.1.2
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
