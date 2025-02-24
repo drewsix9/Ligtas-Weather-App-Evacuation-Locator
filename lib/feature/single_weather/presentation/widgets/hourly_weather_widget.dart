@@ -8,7 +8,6 @@ import '../../data/model/weather_response/weather_response.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {
   final WeatherResponse weatherResponse;
-
   const HourlyWeatherWidget({super.key, required this.weatherResponse});
 
   @override

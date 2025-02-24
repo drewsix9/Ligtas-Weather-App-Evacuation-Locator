@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/daily_foreacast_widget.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/hourly_weather_widget.dart';
 
 import '../providers/location_provider.dart';
@@ -42,12 +43,14 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
                         children: [
                           SizedBox(height: 20),
                           HeaderWidget(),
-
                           CurrentWeatherWidget(
                             weatherResponse: provider.weatherResponse!,
                           ),
                           SizedBox(height: 20),
                           HourlyWeatherWidget(
+                            weatherResponse: provider.weatherResponse!,
+                          ),
+                          DailyForecastWidget(
                             weatherResponse: provider.weatherResponse!,
                           ),
                         ],
