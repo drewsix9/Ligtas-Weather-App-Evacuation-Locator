@@ -8,16 +8,25 @@ import '../../data/model/weather_response/weather_response.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {
   final WeatherResponse weatherResponse;
-  const HourlyWeatherWidget({super.key, required this.weatherResponse});
+  const HourlyWeatherWidget({
+    super.key,
+    required this.weatherResponse,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          margin: EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 20,
+          ),
           alignment: Alignment.topCenter,
-          child: Text("Today", style: TextStyle(fontSize: 18)),
+          child: Text(
+            "Today",
+            style: TextStyle(fontSize: 18),
+          ),
         ),
         hourlyList(),
       ],
@@ -30,10 +39,9 @@ class HourlyWeatherWidget extends StatelessWidget {
       padding: EdgeInsets.only(top: 10, bottom: 10),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount:
-            weatherResponse.hourly!.length > 12
-                ? 12
-                : weatherResponse.hourly!.length,
+        itemCount: weatherResponse.hourly!.length > 12
+            ? 12
+            : weatherResponse.hourly!.length,
         itemBuilder: (context, index) {
           return Consumer<LocationProvider>(
             builder: (context, value, child) {
@@ -44,7 +52,10 @@ class HourlyWeatherWidget extends StatelessWidget {
                 },
                 child: Container(
                   width: 90,
-                  margin: EdgeInsets.only(left: 20, right: 5),
+                  margin: EdgeInsets.only(
+                    left: 20,
+                    right: 5,
+                  ),
                   // padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
@@ -56,15 +67,14 @@ class HourlyWeatherWidget extends StatelessWidget {
                         color: CustomColors.dividerLine.withAlpha(150),
                       ),
                     ],
-                    gradient:
-                        cardIndex == index
-                            ? LinearGradient(
-                              colors: [
-                                CustomColors.firstGradientColor,
-                                CustomColors.secondGradientColor,
-                              ],
-                            )
-                            : null,
+                    gradient: cardIndex == index
+                        ? LinearGradient(
+                            colors: [
+                              CustomColors.firstGradientColor,
+                              CustomColors.secondGradientColor,
+                            ],
+                          )
+                        : null,
                   ),
                   child: HourlyDetails(
                     temp: weatherResponse.hourly![index].temp!,
@@ -92,7 +102,9 @@ class HourlyDetails extends StatelessWidget {
   int cardIndex;
 
   String getTime(final timeStamp) {
-    var date = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+    var date = DateTime.fromMillisecondsSinceEpoch(
+      timeStamp * 1000,
+    );
     return DateFormat("jm").format(date);
   }
 
@@ -115,10 +127,9 @@ class HourlyDetails extends StatelessWidget {
           child: Text(
             getTime(timeStamp),
             style: TextStyle(
-              color:
-                  cardIndex == index
-                      ? Colors.white
-                      : CustomColors.textColorBlack,
+              color: cardIndex == index
+                  ? Colors.white
+                  : CustomColors.textColorBlack,
             ),
           ),
         ),
@@ -126,17 +137,18 @@ class HourlyDetails extends StatelessWidget {
           margin: EdgeInsets.all(5),
           height: 40,
           width: 40,
-          child: Image.asset("assets/weather_icons/$weatherIcon.png"),
+          child: Image.asset(
+            "assets/weather_icons/$weatherIcon.png",
+          ),
         ),
         Container(
           margin: EdgeInsets.only(bottom: 10),
           child: Text(
             "$temp°",
             style: TextStyle(
-              color:
-                  cardIndex == index
-                      ? Colors.white
-                      : CustomColors.textColorBlack,
+              color: cardIndex == index
+                  ? Colors.white
+                  : CustomColors.textColorBlack,
             ),
           ),
         ),
