@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/core/utils/custom_colors.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
 
+import '../../../../core/utils/custom_colors.dart';
 import '../../data/model/weather_response/weather_response.dart';
+import '../providers/location_provider.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {
   final WeatherResponse weatherResponse;

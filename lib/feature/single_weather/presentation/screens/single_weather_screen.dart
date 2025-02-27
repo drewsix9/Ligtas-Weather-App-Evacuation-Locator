@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/comfort_level_widget.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/daily_foreacast_widget.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/hourly_weather_widget.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/shimmers/current_weather_widget_shimmer.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/shimmers/header_widget_shimmer.dart';
 
 import '../../../../core/utils/custom_colors.dart';
 import '../providers/location_provider.dart';
+import '../widgets/comfort_level_widget.dart';
 import '../widgets/current_weather_widget.dart';
+import '../widgets/daily_foreacast_widget.dart';
 import '../widgets/header_widget.dart';
+import '../widgets/hourly_weather_widget.dart';
+import '../widgets/shimmers/current_weather_widget_shimmer.dart';
 import '../widgets/shimmers/daily_forecast_widget_shimmer.dart';
+import '../widgets/shimmers/header_widget_shimmer.dart';
 import '../widgets/shimmers/hourly_weather_widget_shimmer.dart';
 
 class SingleWeatherScreen extends StatefulWidget {

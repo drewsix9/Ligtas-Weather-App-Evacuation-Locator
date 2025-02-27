@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
+
+import '../providers/location_provider.dart';
 
 class HeaderWidget extends StatefulWidget {
   const HeaderWidget({super.key});
