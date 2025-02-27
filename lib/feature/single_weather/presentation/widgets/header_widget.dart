@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
 
+import '../../../search/presentation/widgets/show_city_selection_dialog.dart';
+import '../../data/model/weather_response/weather_response.dart';
 import '../providers/location_provider.dart';
 
 class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({super.key});
+  final WeatherResponse weatherResponse;
+
+  const HeaderWidget({super.key, required this.weatherResponse});
 
   @override
   State<HeaderWidget> createState() => _HeaderWidgetState();
@@ -16,17 +21,33 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   String city = "";
   String date = DateFormat.yMMMMd('en_US').format(DateTime.now());
   late LocationProvider locationProvider;
+  late SuggestionProvider suggestionProvider;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       locationProvider = context.read<LocationProvider>();
+      suggestionProvider = context.read<SuggestionProvider>();
       getAddress(
         locationProvider.getLattitude(),
         locationProvider.getLongitude(),
       );
     });
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant HeaderWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.weatherResponse != widget.weatherResponse) {
+      getAddress(
+        locationProvider.getLattitude(),
+        locationProvider.getLongitude(),
+      );
+      setState(() {
+        date = DateFormat.yMMMMd('en_US').format(DateTime.now());
+      });
+    }
   }
 
   getAddress(lat, lon) async {
@@ -45,9 +66,18 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         Container(
           margin: EdgeInsets.only(left: 20, right: 20),
           alignment: Alignment.topLeft,
-          child: Text(
-            city,
-            style: TextStyle(fontSize: 35, height: 2),
+          child: InkWell(
+            onTap: () {
+              showCitySelectionDialog(
+                context,
+                suggestionProvider,
+                locationProvider,
+              );
+            },
+            child: Text(
+              city,
+              style: TextStyle(fontSize: 35, height: 2),
+            ),
           ),
         ),
         Container(

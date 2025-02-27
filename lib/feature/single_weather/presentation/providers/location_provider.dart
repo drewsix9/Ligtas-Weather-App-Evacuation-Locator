@@ -43,7 +43,7 @@ class LocationProvider with ChangeNotifier {
   double getLongitude() => _longitude;
   int getCurrentIndex() => _currentIndex;
 
-  getLocation() async {
+  fetchCurrentLocation() async {
     bool isServiceEnabled;
     LocationPermission locationPermission;
 
@@ -78,6 +78,16 @@ class LocationProvider with ChangeNotifier {
         weatherResponse = value;
         isLoading = false;
       });
+    });
+  }
+
+  fetchLatLngLocation(lat, lng) async {
+    return await FetchWeatherApi().processData(lat, lng).then((value) {
+      setLattitude = lat;
+      setLongitude = lng;
+      prettyPrintJson(value?.toJson() as Object);
+      weatherResponse = value;
+      isLoading = false;
     });
   }
 }

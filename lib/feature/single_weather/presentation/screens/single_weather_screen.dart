@@ -28,7 +28,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       locationProvider = context.read<LocationProvider>();
       if (locationProvider.checkLoading() == true) {
-        locationProvider.getLocation();
+        locationProvider.fetchCurrentLocation();
       } else {
         locationProvider.getCurrentIndex();
       }
@@ -59,7 +59,9 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
                   scrollDirection: Axis.vertical,
                   children: [
                     SizedBox(height: 20),
-                    HeaderWidget(),
+                    HeaderWidget(
+                      weatherResponse: provider.weatherResponse!,
+                    ),
                     CurrentWeatherWidget(
                       weatherResponse: provider.weatherResponse!,
                     ),
