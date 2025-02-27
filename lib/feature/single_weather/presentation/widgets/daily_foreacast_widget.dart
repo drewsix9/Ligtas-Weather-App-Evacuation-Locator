@@ -47,10 +47,9 @@ class DailyForecastWidget extends StatelessWidget {
       height: 300,
       child: ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount:
-            weatherResponse!.daily!.length > 7
-                ? 7
-                : weatherResponse!.daily!.length,
+        itemCount: weatherResponse!.daily!.length > 7
+            ? 7
+            : weatherResponse!.daily!.length,
         itemBuilder: (context, index) {
           return Column(
             children: [

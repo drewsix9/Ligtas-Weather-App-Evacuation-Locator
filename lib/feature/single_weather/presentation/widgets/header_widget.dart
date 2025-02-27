@@ -39,11 +39,15 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           margin: EdgeInsets.only(left: 20, right: 20),
           alignment: Alignment.topLeft,
-          child: Text(city, style: TextStyle(fontSize: 35, height: 2)),
+          child: Text(
+            city,
+            style: TextStyle(fontSize: 35, height: 2),
+          ),
         ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),

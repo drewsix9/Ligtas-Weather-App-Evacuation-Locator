@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pretty_print_json/pretty_print_json.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/domain/usecases/fetch_weather.dart';
 
 import '../../data/model/weather_response/weather_response.dart';
@@ -29,6 +30,11 @@ class LocationProvider with ChangeNotifier {
 
   set setCurrentIndex(int index) {
     _currentIndex = index;
+    notifyListeners();
+  }
+
+  void toggleLoading() {
+    _isLoading = !_isLoading;
     notifyListeners();
   }
 
@@ -68,10 +74,10 @@ class LocationProvider with ChangeNotifier {
       return FetchWeatherApi()
           .processData(value.latitude, value.longitude)
           .then((value) {
-            print(value);
-            weatherResponse = value;
-            isLoading = false;
-          });
+        prettyPrintJson(value?.toJson() as Object);
+        weatherResponse = value;
+        isLoading = false;
+      });
     });
   }
 }
