@@ -34,8 +34,7 @@ class FetchQueryApi {
     if (response.statusCode == 200) {
       var jsonString = jsonDecode(response.body);
       return jsonString;
-    } else {
-      throw Exception('Failed to load data');
     }
+    return null;
   }
 }
