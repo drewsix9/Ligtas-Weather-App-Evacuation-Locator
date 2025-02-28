@@ -112,7 +112,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 68,
-                  color: CustomColors.textColorBlack,
+                  color: CustomColors.primaryTextColor,
                 ),
               ),
               TextSpan(

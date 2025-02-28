@@ -69,7 +69,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.textColorBlack,
+                            color: CustomColors.primaryTextColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -78,7 +78,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.textColorBlack,
+                            color: CustomColors.primaryTextColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -99,7 +99,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.textColorBlack,
+                            color: CustomColors.primaryTextColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -108,7 +108,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.textColorBlack,
+                            color: CustomColors.primaryTextColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

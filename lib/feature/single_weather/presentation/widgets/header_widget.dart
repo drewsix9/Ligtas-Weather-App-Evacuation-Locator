@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
 
-import '../../../search/presentation/widgets/show_city_selection_dialog.dart';
 import '../../data/model/weather_response/weather_response.dart';
 import '../providers/location_provider.dart';
 
@@ -66,18 +65,9 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         Container(
           margin: EdgeInsets.only(left: 20, right: 20),
           alignment: Alignment.topLeft,
-          child: InkWell(
-            onTap: () {
-              showCitySelectionDialog(
-                context,
-                suggestionProvider,
-                locationProvider,
-              );
-            },
-            child: Text(
-              city,
-              style: TextStyle(fontSize: 35, height: 2),
-            ),
+          child: Text(
+            city,
+            style: TextStyle(fontSize: 35, height: 2),
           ),
         ),
         Container(

@@ -129,7 +129,7 @@ class HourlyDetails extends StatelessWidget {
             style: TextStyle(
               color: cardIndex == index
                   ? Colors.white
-                  : CustomColors.textColorBlack,
+                  : CustomColors.primaryTextColor,
             ),
           ),
         ),
@@ -148,7 +148,7 @@ class HourlyDetails extends StatelessWidget {
             style: TextStyle(
               color: cardIndex == index
                   ? Colors.white
-                  : CustomColors.textColorBlack,
+                  : CustomColors.primaryTextColor,
             ),
           ),
         ),

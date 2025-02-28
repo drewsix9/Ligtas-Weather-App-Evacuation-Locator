@@ -13,7 +13,7 @@ void showCitySelectionDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('Select City'),
+        title: Text('Search City'),
         content: TypeAheadField(
           suggestionsCallback: (pattern) async {
             return await FetchQueryApi().fetchQuery(pattern);

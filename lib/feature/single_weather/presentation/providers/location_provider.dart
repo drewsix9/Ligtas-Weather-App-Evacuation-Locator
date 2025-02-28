@@ -47,6 +47,8 @@ class LocationProvider with ChangeNotifier {
     bool isServiceEnabled;
     LocationPermission locationPermission;
 
+    isLoading = true;
+
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!isServiceEnabled) {

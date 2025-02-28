@@ -31,7 +31,7 @@ class DailyForecastWidget extends StatelessWidget {
             child: Text(
               "Next Days",
               style: TextStyle(
-                color: CustomColors.textColorBlack,
+                color: CustomColors.primaryTextColor,
                 fontSize: 17,
               ),
             ),
@@ -64,7 +64,7 @@ class DailyForecastWidget extends StatelessWidget {
                       child: Text(
                         getDay(weatherResponse!.daily![index].dt!),
                         style: TextStyle(
-                          color: CustomColors.textColorBlack,
+                          color: CustomColors.primaryTextColor,
                           fontSize: 13,
                         ),
                       ),
@@ -79,7 +79,7 @@ class DailyForecastWidget extends StatelessWidget {
                     Text(
                       "${weatherResponse!.daily![index].temp!.max}°/${weatherResponse!.daily![index].temp!.min}°",
                       style: TextStyle(
-                        color: CustomColors.textColorBlack,
+                        color: CustomColors.primaryTextColor,
                         fontSize: 13,
                       ),
                     ),

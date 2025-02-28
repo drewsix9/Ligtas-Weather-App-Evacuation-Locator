@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 import '../../../../core/utils/custom_colors.dart';
+import '../../../search/presentation/providers/suggestion_provider.dart';
+import '../../../search/presentation/widgets/show_city_selection_dialog.dart';
 import '../providers/location_provider.dart';
 import '../widgets/comfort_level_widget.dart';
 import '../widgets/current_weather_widget.dart';
@@ -22,11 +25,15 @@ class SingleWeatherScreen extends StatefulWidget {
 
 class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
   late LocationProvider locationProvider;
+  late SuggestionProvider suggestionProvider;
+  late ThemeProvider themeProvider;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       locationProvider = context.read<LocationProvider>();
+      suggestionProvider = context.read<SuggestionProvider>();
+      themeProvider = context.read<ThemeProvider>();
       if (locationProvider.checkLoading() == true) {
         locationProvider.fetchCurrentLocation();
       } else {
@@ -38,6 +45,43 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            showCitySelectionDialog(
+              context,
+              suggestionProvider,
+              locationProvider,
+            );
+          },
+          icon: Icon(
+            Icons.search_rounded,
+            color: CustomColors.primaryTextColor,
+          ),
+        ),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, provider, child) => Switch(
+              value: provider.isToggled,
+              onChanged: (_) {
+                provider.toggleTheme();
+              },
+            ),
+          ),
+        ],
+        backgroundColor: CustomColors.cardColor,
+        elevation: 0,
+        title: Text(
+          'Weather',
+          style: TextStyle(
+            color: CustomColors.primaryTextColor,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Consumer<LocationProvider>(
           builder: (context, provider, child) => provider.checkLoading()
