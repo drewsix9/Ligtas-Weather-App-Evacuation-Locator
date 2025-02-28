@@ -60,17 +60,8 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
             color: CustomColors.primaryTextColor,
           ),
         ),
-        actions: [
-          Consumer<ThemeProvider>(
-            builder: (context, provider, child) => Switch(
-              value: provider.isToggled,
-              onChanged: (_) {
-                provider.toggleTheme();
-              },
-            ),
-          ),
-        ],
-        backgroundColor: CustomColors.cardColor,
+        actions: [],
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           'Weather',
