@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:pretty_print_json/pretty_print_json.dart';
 import 'package:weather_app_evac_locator/feature/search/data/model/suggestion_response/suggestion_response.dart';
 
 class FetchQueryApi {
@@ -33,6 +34,7 @@ class FetchQueryApi {
     var response = await http.get(Uri.parse(apiUrl(query)));
     if (response.statusCode == 200) {
       var jsonString = jsonDecode(response.body);
+      prettyPrintJson(jsonString);
       return jsonString;
     }
     return null;
