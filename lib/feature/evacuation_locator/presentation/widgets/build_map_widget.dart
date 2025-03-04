@@ -41,16 +41,15 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
             markers: getMarkers(),
           ),
         ),
-        // PolylineLayer(
-        //   polylineCulling: false,
-        //   polylines: [
-        //     Polyline(
-        //       points: value.points,
-        //       strokeWidth: 5,
-        //       color: Colors.blue,
-        //     ),
-        //   ],
-        // ),
+        PolylineLayer(
+          polylines: [
+            Polyline(
+              points: context.watch<EvacuationLocatorProvider>().points,
+              strokeWidth: 5,
+              color: Colors.blue,
+            ),
+          ],
+        ),
       ],
     );
   }
