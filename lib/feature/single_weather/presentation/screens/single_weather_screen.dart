@@ -45,6 +45,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
