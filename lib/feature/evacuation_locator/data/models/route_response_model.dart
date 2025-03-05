@@ -39,7 +39,8 @@ class RouteResponseModel {
         type: json["type"],
         bbox: List<double>.from(json["bbox"].map((x) => x?.toDouble())),
         features: List<Feature>.from(
-            json["features"].map((x) => Feature.fromJson(x))),
+          json["features"].map((x) => Feature.fromJson(x)),
+        ),
         metadata: Metadata.fromJson(json["metadata"]),
       );
 
@@ -125,14 +126,17 @@ class Geometry {
   String toRawJson() => json.encode(toJson());
 
   factory Geometry.fromJson(Map<String, dynamic> json) => Geometry(
-        coordinates: List<List<double>>.from(json["coordinates"]
-            .map((x) => List<double>.from(x.map((x) => x?.toDouble())))),
+        coordinates: List<List<double>>.from(
+          json["coordinates"]
+              .map((x) => List<double>.from(x.map((x) => x?.toDouble()))),
+        ),
         type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
         "coordinates": List<dynamic>.from(
-            coordinates.map((x) => List<dynamic>.from(x.map((x) => x)))),
+          coordinates.map((x) => List<dynamic>.from(x.map((x) => x))),
+        ),
         "type": type,
       };
 }
@@ -166,7 +170,8 @@ class Properties {
 
   factory Properties.fromJson(Map<String, dynamic> json) => Properties(
         segments: List<Segment>.from(
-            json["segments"].map((x) => Segment.fromJson(x))),
+          json["segments"].map((x) => Segment.fromJson(x)),
+        ),
         wayPoints: List<int>.from(json["way_points"].map((x) => x)),
         summary: Summary.fromJson(json["summary"]),
       );
@@ -429,8 +434,10 @@ class Query {
   String toRawJson() => json.encode(toJson());
 
   factory Query.fromJson(Map<String, dynamic> json) => Query(
-        coordinates: List<List<double>>.from(json["coordinates"]
-            .map((x) => List<double>.from(x.map((x) => x?.toDouble())))),
+        coordinates: List<List<double>>.from(
+          json["coordinates"]
+              .map((x) => List<double>.from(x.map((x) => x?.toDouble()))),
+        ),
         profile: json["profile"],
         profileName: json["profileName"],
         format: json["format"],
@@ -438,7 +445,8 @@ class Query {
 
   Map<String, dynamic> toJson() => {
         "coordinates": List<dynamic>.from(
-            coordinates.map((x) => List<dynamic>.from(x.map((x) => x)))),
+          coordinates.map((x) => List<dynamic>.from(x.map((x) => x))),
+        ),
         "profile": profile,
         "profileName": profileName,
         "format": format,
