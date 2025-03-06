@@ -4,6 +4,12 @@ class EvacuationCenters {
   static List<EvacuationCenterModel> allCenters = [
     // Tagbilaran City
     EvacuationCenterModel(
+      name: "Bohol Cultural Center",
+      municipality: "Tagbilaran City",
+      latitude: 9.64807365799118,
+      longitude: 123.85547848949878,
+    ),
+    EvacuationCenterModel(
       name: "Booy Covered Court",
       municipality: "Tagbilaran City",
       latitude: 9.662506948454046,
@@ -1472,109 +1478,9 @@ class EvacuationCenters {
       longitude: 124.31155003165183,
     ),
 
-    // Alicia
-    EvacuationCenterModel(
-      name: "Alicia Multi-Purpose Covered Court",
-      municipality: "Alicia",
-      latitude: 9.890285870795697,
-      longitude: 124.43980230093342,
-    ),
-    EvacuationCenterModel(
-      name: "San Isidro Covered Court",
-      municipality: "Alicia",
-      latitude: 9.919384878805122,
-      longitude: 124.35453532660746,
-    ),
-    EvacuationCenterModel(
-      name: "Del Monte Covered Court",
-      municipality: "Alicia",
-      latitude: 9.881447585356197,
-      longitude: 124.42558732412436,
-    ),
-    EvacuationCenterModel(
-      name: "Untaga Basketball Court",
-      municipality: "Alicia",
-      latitude: 9.894937737840113,
-      longitude: 124.41877679470932,
-    ),
-    EvacuationCenterModel(
-      name: "Alicia Central Elementary School",
-      municipality: "Alicia",
-      latitude: 9.88950944190296,
-      longitude: 124.44510112018311,
-    ),
-    EvacuationCenterModel(
-      name: "Alicia Technical-Vocational High School",
-      municipality: "Alicia",
-      latitude: 9.894520340981217,
-      longitude: 124.44331271331446,
-    ),
-    EvacuationCenterModel(
-      name: "Alicia Central Elementary School (ACES-ANNEX)",
-      municipality: "Alicia",
-      latitude: 9.88599958527626,
-      longitude: 124.43677651579596,
-    ),
-
-    // Ubay
-    EvacuationCenterModel(
-      name: "Barangay Tipolo Covered Court",
-      municipality: "Ubay",
-      latitude: 10.045544011853163,
-      longitude: 124.49420191614564,
-    ),
-    EvacuationCenterModel(
-      name: "Hambabauran Covered Court",
-      municipality: "Ubay",
-      latitude: 10.001313642809416,
-      longitude: 124.41402763542294,
-    ),
-    EvacuationCenterModel(
-      name: "San Pascual Covered Court",
-      municipality: "Ubay",
-      latitude: 9.95514986323218,
-      longitude: 124.42963506456077,
-    ),
-    EvacuationCenterModel(
-      name: "Ubay Central Elementary School",
-      municipality: "Ubay",
-      latitude: 10.057358850285363,
-      longitude: 124.47401655834594,
-    ),
-    EvacuationCenterModel(
-      name: "Governor Boyles Elementary School",
-      municipality: "Ubay",
-      latitude: 9.917011093481813,
-      longitude: 124.38037372309986,
-    ),
-    EvacuationCenterModel(
-      name: "Cuya Elementary School",
-      municipality: "Ubay",
-      latitude: 9.975448717198407,
-      longitude: 124.56759993983002,
-    ),
-    EvacuationCenterModel(
-      name: "Biabas Elementary School",
-      municipality: "Ubay",
-      latitude: 9.985648765934265,
-      longitude: 124.53201100736648,
-    ),
-    EvacuationCenterModel(
-      name: "Camambugan National High School",
-      municipality: "Ubay",
-      latitude: 10.061673940468134,
-      longitude: 124.43491001658623,
-    ),
-    EvacuationCenterModel(
-      name: "San Pascual Elementary School",
-      municipality: "Ubay",
-      latitude: 9.962570553304204,
-      longitude: 124.43204788644506,
-    ),
-
     // Trinidad
     EvacuationCenterModel(
-      name: "Purok 6 Barangay Covered Court",
+      name: "Purok 6, Brgy Covered Court",
       municipality: "Trinidad",
       latitude: 10.075379456743,
       longitude: 124.33631435247872,
@@ -1674,6 +1580,310 @@ class EvacuationCenters {
       municipality: "Trinidad",
       latitude: 10.05253302461607,
       longitude: 124.32517150786806,
+    ),
+
+    // Ubay
+    EvacuationCenterModel(
+      name: "Barangay Tipolo Covered Court",
+      municipality: "Ubay",
+      latitude: 10.045544011853163,
+      longitude: 124.49420191614564,
+    ),
+    EvacuationCenterModel(
+      name: "Hambabauran Covered Court",
+      municipality: "Ubay",
+      latitude: 10.001313642809416,
+      longitude: 124.41402763542294,
+    ),
+    EvacuationCenterModel(
+      name: "San Pascual Covered Court",
+      municipality: "Ubay",
+      latitude: 9.95514986323218,
+      longitude: 124.42963506456077,
+    ),
+    EvacuationCenterModel(
+      name: "Ubay Central Elementary School",
+      municipality: "Ubay",
+      latitude: 10.057358850285363,
+      longitude: 124.47401655834594,
+    ),
+    EvacuationCenterModel(
+      name: "Governor Boyles Elementary School",
+      municipality: "Ubay",
+      latitude: 9.917011093481813,
+      longitude: 124.38037372309986,
+    ),
+    EvacuationCenterModel(
+      name: "Cuya Elementary School",
+      municipality: "Ubay",
+      latitude: 9.975448717198407,
+      longitude: 124.56759993983002,
+    ),
+    EvacuationCenterModel(
+      name: "Biabas Elementary School",
+      municipality: "Ubay",
+      latitude: 9.985648765934265,
+      longitude: 124.53201100736648,
+    ),
+    EvacuationCenterModel(
+      name: "Camambugan National High School",
+      municipality: "Ubay",
+      latitude: 10.061673940468134,
+      longitude: 124.43491001658623,
+    ),
+    EvacuationCenterModel(
+      name: "San Pascual Elementary School",
+      municipality: "Ubay",
+      latitude: 9.962570553304204,
+      longitude: 124.43204788644506,
+    ),
+
+    // Alicia
+    EvacuationCenterModel(
+      name: "Alicia Multi-Purpose Covered Court",
+      municipality: "Alicia",
+      latitude: 9.890285870795697,
+      longitude: 124.43980230093342,
+    ),
+    EvacuationCenterModel(
+      name: "San Isidro Covered Court",
+      municipality: "Alicia",
+      latitude: 9.919384878805122,
+      longitude: 124.35453532660746,
+    ),
+    EvacuationCenterModel(
+      name: "Del Monte Covered Court",
+      municipality: "Alicia",
+      latitude: 9.881447585356197,
+      longitude: 124.42558732412436,
+    ),
+    EvacuationCenterModel(
+      name: "Untaga Basketball Court",
+      municipality: "Alicia",
+      latitude: 9.894937737840113,
+      longitude: 124.41877679470932,
+    ),
+    EvacuationCenterModel(
+      name: "Alicia Central Elementary School",
+      municipality: "Alicia",
+      latitude: 9.88950944190296,
+      longitude: 124.44510112018311,
+    ),
+    EvacuationCenterModel(
+      name: "Alicia Technical-Vocational High School",
+      municipality: "Alicia",
+      latitude: 9.894520340981217,
+      longitude: 124.44331271331446,
+    ),
+    EvacuationCenterModel(
+      name: "Alicia Central Elementary School (ACES-ANNEX)",
+      municipality: "Alicia",
+      latitude: 9.88599958527626,
+      longitude: 124.43677651579596,
+    ),
+
+    // Anda
+    EvacuationCenterModel(
+      name: "Badiang Covered Court",
+      municipality: "Anda",
+      latitude: 9.797714249980881,
+      longitude: 124.58327767670967,
+    ),
+    EvacuationCenterModel(
+      name: "Candabong Basketball Court",
+      municipality: "Anda",
+      latitude: 9.737402573085891,
+      longitude: 124.53637541437188,
+    ),
+    EvacuationCenterModel(
+      name: "Anda Central Elementary School",
+      municipality: "Anda",
+      latitude: 9.74797017507795,
+      longitude: 124.57288926696766,
+    ),
+    EvacuationCenterModel(
+      name: "Candabong High School",
+      municipality: "Anda",
+      latitude: 9.734983489906957,
+      longitude: 124.53342149924627,
+    ),
+    EvacuationCenterModel(
+      name: "Talisay Elementary School",
+      municipality: "Anda",
+      latitude: 9.77243460941141,
+      longitude: 124.59339757649916,
+    ),
+    EvacuationCenterModel(
+      name: "Badiang National High School",
+      municipality: "Anda",
+      latitude: 9.794933525928537,
+      longitude: 124.58678861361717,
+    ),
+    EvacuationCenterModel(
+      name: "Buenasuerte Elementary School",
+      municipality: "Anda",
+      latitude: 9.791815014804543,
+      longitude: 124.54036306061984,
+    ),
+    EvacuationCenterModel(
+      name: "Abihid Elementary School",
+      municipality: "Anda",
+      latitude: 9.747607543518216,
+      longitude: 124.57625389130658,
+    ),
+    EvacuationCenterModel(
+      name: "Porsenas Elementary School",
+      municipality: "Anda",
+      latitude: 9.758519676218635,
+      longitude: 124.57771301298183,
+    ),
+    EvacuationCenterModel(
+      name: "Tanod Elementary School",
+      municipality: "Anda",
+      latitude: 9.790595392894518,
+      longitude: 124.56157046061985,
+    ),
+    EvacuationCenterModel(
+      name: "Ipo Elementary School",
+      municipality: "Anda",
+      latitude: 9.734386484041577,
+      longitude: 124.53332963787267,
+    ),
+    EvacuationCenterModel(
+      name: "Bacong Elementary School",
+      municipality: "Anda",
+      latitude: 9.740747726973373,
+      longitude: 124.56543884751957,
+    ),
+    EvacuationCenterModel(
+      name: "Londag Elementary School",
+      municipality: "Anda",
+      latitude: 9.76390130437222,
+      longitude: 124.52238732199339,
+    ),
+
+    // Batuan
+    EvacuationCenterModel(
+      name: "Batuan National High School",
+      municipality: "Batuan",
+      latitude: 9.797194009334088,
+      longitude: 124.13377738507698,
+    ),
+    EvacuationCenterModel(
+      name: "Cantigdas Elementary School",
+      municipality: "Batuan",
+      latitude: 9.790554495036979,
+      longitude: 124.13655615359012,
+    ),
+    EvacuationCenterModel(
+      name: "Batuan Central Elementary School",
+      municipality: "Batuan",
+      latitude: 9.781419659589373,
+      longitude: 124.14711332827466,
+    ),
+    EvacuationCenterModel(
+      name: "St. Therese School",
+      municipality: "Batuan",
+      latitude: 9.78213861413368,
+      longitude: 124.14947367219573,
+    ),
+    EvacuationCenterModel(
+      name: "Batuan Central Elementary School- Annex",
+      municipality: "Batuan",
+      latitude: 9.784452128720684,
+      longitude: 124.1542410852591,
+    ),
+    EvacuationCenterModel(
+      name: "Batuan Gymnasium",
+      municipality: "Batuan",
+      latitude: 9.782686470611472,
+      longitude: 124.14711445589974,
+    ),
+    EvacuationCenterModel(
+      name: "Janlud Elementary School",
+      municipality: "Batuan",
+      latitude: 9.798772643610155,
+      longitude: 124.1207993032571,
+    ),
+    EvacuationCenterModel(
+      name: "Quezon Primary School",
+      municipality: "Batuan",
+      latitude: 9.768580506794073,
+      longitude: 124.16110623037152,
+    ),
+
+    // Bilar
+    EvacuationCenterModel(
+      name: "Bilar Central Elementary School",
+      municipality: "Bilar",
+      latitude: 9.704857474816537,
+      longitude: 124.10299475103005,
+    ),
+    EvacuationCenterModel(
+      name: "Riverside Elementary School",
+      municipality: "Bilar",
+      latitude: 9.70735011088383,
+      longitude: 124.11068089981158,
+    ),
+    EvacuationCenterModel(
+      name: "Quezon Elementary School",
+      municipality: "Bilar",
+      latitude: 9.69435753056116,
+      longitude: 124.09367443049834,
+    ),
+    EvacuationCenterModel(
+      name: "BISU Bilar Gymnasium",
+      municipality: "Bilar",
+      latitude: 9.71869349417991,
+      longitude: 124.10907272679648,
+    ),
+    EvacuationCenterModel(
+      name: "Zamora Elementary School",
+      municipality: "Bilar",
+      latitude: 9.721337198825545,
+      longitude: 124.1131067690751,
+    ),
+    EvacuationCenterModel(
+      name: "Owac Elementary School",
+      municipality: "Bilar",
+      latitude: 9.682633748294482,
+      longitude: 124.11028416118515,
+    ),
+    EvacuationCenterModel(
+      name: "Bonifacio Elementary School",
+      municipality: "Bilar",
+      latitude: 9.770518728981825,
+      longitude: 124.11756242679648,
+    ),
+    EvacuationCenterModel(
+      name: "Cabacnitan Elementary School",
+      municipality: "Bilar",
+      latitude: 9.757328693036985,
+      longitude: 124.13305227282665,
+    ),
+    EvacuationCenterModel(
+      name: "Cambisig Elementary School",
+      municipality: "Bilar",
+      latitude: 9.74261725734,
+      longitude: 124.16098825748328,
+    ),
+    EvacuationCenterModel(
+      name: "Bayawan Elementary School",
+      municipality: "Bilar",
+      latitude: 9.73626192108551,
+      longitude: 124.05983568817005,
+    ),
+    EvacuationCenterModel(
+      name: "Bayawan National High School",
+      municipality: "Bilar",
+      latitude: 9.739074674242245,
+      longitude: 124.05848385485328,
+    ),
+    EvacuationCenterModel(
+      name: "Municipality of Bilar Basketball Court",
+      municipality: "Bilar",
+      latitude: 9.707654795498447,
+      longitude: 124.10542063957222,
     ),
 
     // Candijay
@@ -1850,6 +2060,124 @@ class EvacuationCenters {
       municipality: "Candijay",
       latitude: 9.70050400023502,
       longitude: 124.40589770668524,
+    ),
+
+    // Carmen
+    EvacuationCenterModel(
+      name: "San Agustin Covered Court",
+      municipality: "Carmen",
+      latitude: 9.842531224008292,
+      longitude: 124.2797470125209,
+    ),
+    EvacuationCenterModel(
+      name: "Grandstand Basketball Court",
+      municipality: "Carmen",
+      latitude: 9.824153166497455,
+      longitude: 124.19947788129458,
+    ),
+    EvacuationCenterModel(
+      name: "Carmen Gymnasium",
+      municipality: "Carmen",
+      latitude: 9.818973086568056,
+      longitude: 124.19741794471781,
+    ),
+    EvacuationCenterModel(
+      name: "Carmen East Central Elementary School",
+      municipality: "Carmen",
+      latitude: 9.818833011810892,
+      longitude: 124.19581934819819,
+    ),
+    EvacuationCenterModel(
+      name: "Carmen West Elementary School",
+      municipality: "Carmen",
+      latitude: 9.82644321171597,
+      longitude: 124.19700890789652,
+    ),
+    EvacuationCenterModel(
+      name: "Katipunan Elementary School",
+      municipality: "Carmen",
+      latitude: 9.835200131266836,
+      longitude: 124.21462431421753,
+    ),
+    EvacuationCenterModel(
+      name: "Katipunan National High School (Main)",
+      municipality: "Carmen",
+      latitude: 9.839809123002055,
+      longitude: 124.21981707092876,
+    ),
+    EvacuationCenterModel(
+      name: "St. Anthony's Academy of Carmen, Inc.",
+      municipality: "Carmen",
+      latitude: 9.825236744386475,
+      longitude: 124.19966697733467,
+    ),
+    EvacuationCenterModel(
+      name: "Carmen Municipal College",
+      municipality: "Carmen",
+      latitude: 9.828450456935727,
+      longitude: 124.20533180283785,
+    ),
+    EvacuationCenterModel(
+      name: "Guadalupe Elementary School",
+      municipality: "Carmen",
+      latitude: 9.809167713406495,
+      longitude: 124.21005249062492,
+    ),
+
+    // Dimiao
+    EvacuationCenterModel(
+      name: "Datag Basketball Court",
+      municipality: "Dimiao",
+      latitude: 9.620566138428973,
+      longitude: 124.15460343685119,
+    ),
+    EvacuationCenterModel(
+      name: "Cambacol Basketball Court",
+      municipality: "Dimiao",
+      latitude: 9.630162440658971,
+      longitude: 124.16510230632687,
+    ),
+    EvacuationCenterModel(
+      name: "Titin's Covered Court",
+      municipality: "Dimiao",
+      latitude: 9.611185220104769,
+      longitude: 124.18030379442185,
+    ),
+    EvacuationCenterModel(
+      name: "Malinao West Covered Court",
+      municipality: "Dimiao",
+      latitude: 9.613533777961552,
+      longitude: 124.11490967643805,
+    ),
+    EvacuationCenterModel(
+      name: "Pangihawan Basketball Court",
+      municipality: "Dimiao",
+      latitude: 9.64653604624911,
+      longitude: 124.14117386659241,
+    ),
+    EvacuationCenterModel(
+      name: "Alemania Basketball Court",
+      municipality: "Dimiao",
+      latitude: 9.624704137489653,
+      longitude: 124.15834000394823,
+    ),
+    EvacuationCenterModel(
+      name: "TSR Basketball Court",
+      municipality: "Dimiao",
+      latitude: 9.61318636926282,
+      longitude: 124.16718749551472,
+    ),
+    EvacuationCenterModel(
+      name: "Dimiao National High School",
+      municipality: "Dimiao",
+      latitude: 9.60003414341436,
+      longitude: 124.14338679981158,
+    ),
+    EvacuationCenterModel(
+      name: "Dimiao Central Elementary School",
+      municipality: "Dimiao",
+      latitude: 9.606102665756994,
+      longitude: 124.16152934213984,
     ),
 
     // Duero

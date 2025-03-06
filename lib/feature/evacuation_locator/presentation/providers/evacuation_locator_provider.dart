@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http show get;
 import 'package:latlong2/latlong.dart' as latlng;
@@ -97,48 +98,91 @@ class EvacuationLocatorProvider with ChangeNotifier {
   }
 
   Future<void> route() async {
-    EvacuationCenterModel nearestEvac =
-        HaversineDistanceCalculation.nearestEvac(
-      latlng.LatLng(_lattitude, _longitude),
-    );
-    var response = await http.get(
-      OpenRouteServiceApi.getRouteUrl(
-        '$_longitude,$_lattitude',
-        '${nearestEvac.longitude},${nearestEvac.latitude}',
-      ),
-    );
-    if (response.statusCode == 200) {
-      setRouteResponseModel = response.body;
-      prettyPrintJson(response.body);
-      updatePointsAndBounds(_routeResponseModel!);
-    } else {
-      throw Exception('Failed to load coordinates: ${response.statusCode}');
+    try {
+      EvacuationCenterModel nearestEvac =
+          HaversineDistanceCalculation.nearestEvac(
+        latlng.LatLng(_lattitude, _longitude),
+      );
+
+      var response = await http
+          .get(
+            OpenRouteServiceApi.getRouteUrl(
+              '$_longitude,$_lattitude',
+              '${nearestEvac.longitude},${nearestEvac.latitude}',
+            ),
+          )
+          .timeout(const Duration(seconds: 15)); // Add timeout
+
+      if (response.statusCode == 200) {
+        setRouteResponseModel = response.body;
+        prettyPrintJson(response.body);
+        updatePointsAndBounds(_routeResponseModel!);
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Server error: ${response.statusCode}',
+          backgroundColor: const Color(0xFFFFCDD2),
+          textColor: const Color(0xFFB71C1C),
+        );
+        print('API Error: ${response.statusCode}, ${response.body}');
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: 'Network error. Please check your internet connection.',
+        backgroundColor: const Color(0xFFFFCDD2),
+        textColor: const Color(0xFFB71C1C),
+      );
+      print('Network Error: $e');
+      _points = [];
+      _bounds = null;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
-    isLoading = false;
   }
 
   void updatePointsAndBounds(
     RouteResponseModel routeResponseApiModelProvider,
   ) {
-    _points = _routeResponseModel!.features[0].geometry.coordinates
-        .map((e) => latlng.LatLng(e[1].toDouble(), e[0].toDouble()))
-        .toList();
-    _bounds = _routeResponseModel!.toLatLngBounds();
+    if (_routeResponseModel != null &&
+        _routeResponseModel!.features.isNotEmpty &&
+        _routeResponseModel!.features[0].geometry.coordinates.isNotEmpty) {
+      _points = _routeResponseModel!.features[0].geometry.coordinates
+          .map((e) => latlng.LatLng(e[1].toDouble(), e[0].toDouble()))
+          .toList();
+
+      // Only set bounds if we have at least one point
+      if (_points.isNotEmpty) {
+        try {
+          _bounds = _routeResponseModel!.toLatLngBounds();
+        } catch (e) {
+          print('Error creating bounds: $e');
+          _bounds = null;
+        }
+      } else {
+        _bounds = null;
+        print('No points available to create bounds');
+      }
+    } else {
+      _points = [];
+      _bounds = null;
+      print('Invalid route response model or empty coordinates');
+    }
     updateBounds();
   }
 
   void updateBounds() {
-    if (_isMapControllerReady) {
+    if (_isMapControllerReady && _bounds != null && _points.isNotEmpty) {
       isLoading = false;
       mapController.fitCamera(
         CameraFit.bounds(
-          bounds: bounds!,
+          bounds: _bounds!,
           padding: EdgeInsets.fromLTRB(50, 100, 50, 250),
         ),
       );
     } else {
-      // Handle the case where the map controller is not ready
-      print('MapController is not ready yet.');
+      // Handle the case where the map controller is not ready or bounds is null
+      isLoading = false;
+      print('MapController is not ready yet or bounds is invalid.');
     }
   }
 }

@@ -16,8 +16,10 @@ class BuildMapWidget extends StatefulWidget {
 class _BuildMapWidgetState extends State<BuildMapWidget> {
   @override
   Widget build(BuildContext context) {
+    final evacProvider = context.watch<EvacuationLocatorProvider>();
+
     return FlutterMap(
-      mapController: context.watch<EvacuationLocatorProvider>().mapController,
+      mapController: evacProvider.mapController,
       options: MapOptions(
         onMapReady: () {
           context.read<EvacuationLocatorProvider>().setMapControllerReady();
@@ -41,15 +43,16 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
             markers: getMarkers(),
           ),
         ),
-        PolylineLayer(
-          polylines: [
-            Polyline(
-              points: context.watch<EvacuationLocatorProvider>().points,
-              strokeWidth: 5,
-              color: Colors.blue,
-            ),
-          ],
-        ),
+        if (evacProvider.points.isNotEmpty)
+          PolylineLayer(
+            polylines: [
+              Polyline(
+                points: evacProvider.points,
+                strokeWidth: 5,
+                color: Colors.blue,
+              ),
+            ],
+          ),
       ],
     );
   }

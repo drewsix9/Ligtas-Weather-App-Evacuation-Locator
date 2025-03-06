@@ -69,6 +69,7 @@ class LocationProvider with ChangeNotifier {
     }
 
     return await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
     ).then((value) {
       setLattitude = value.latitude;
