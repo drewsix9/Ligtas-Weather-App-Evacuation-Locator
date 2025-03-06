@@ -24,7 +24,7 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
       evacLocProvider = context.read<EvacuationLocatorProvider>();
       if (evacLocProvider.loading == true) {
         evacLocProvider
-            .fetchUserCoordinates(); // TODO: Call  this after clicking Route button
+            .fetchUserCoordinates(); // TODO: Call  this after clicking Route button2
       }
     });
   }

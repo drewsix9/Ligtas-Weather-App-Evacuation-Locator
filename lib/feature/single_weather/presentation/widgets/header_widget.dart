@@ -28,8 +28,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       locationProvider = context.read<LocationProvider>();
       suggestionProvider = context.read<SuggestionProvider>();
       getAddress(
-        locationProvider.getLattitude(),
-        locationProvider.getLongitude(),
+        locationProvider.getLattitude,
+        locationProvider.getLongitude,
       );
     });
     super.initState();
@@ -40,8 +40,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.weatherResponse != widget.weatherResponse) {
       getAddress(
-        locationProvider.getLattitude(),
-        locationProvider.getLongitude(),
+        locationProvider.getLattitude,
+        locationProvider.getLongitude,
       );
       setState(() {
         date = DateFormat.yMMMMd('en_US').format(DateTime.now());

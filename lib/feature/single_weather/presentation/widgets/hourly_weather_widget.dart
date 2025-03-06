@@ -45,7 +45,7 @@ class HourlyWeatherWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           return Consumer<LocationProvider>(
             builder: (context, value, child) {
-              int cardIndex = value.getCurrentIndex();
+              int cardIndex = value.getCurrentIndex;
               return GestureDetector(
                 onTap: () {
                   value.setCurrentIndex = index;

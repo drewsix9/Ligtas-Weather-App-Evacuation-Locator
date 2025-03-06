@@ -34,10 +34,10 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
       locationProvider = context.read<LocationProvider>();
       suggestionProvider = context.read<SuggestionProvider>();
       themeProvider = context.read<ThemeProvider>();
-      if (locationProvider.checkLoading() == true) {
+      if (locationProvider.checkLoading == true) {
         locationProvider.fetchCurrentLocation();
       } else {
-        locationProvider.getCurrentIndex();
+        locationProvider.getCurrentIndex;
       }
     });
   }
@@ -76,7 +76,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
       ),
       body: SafeArea(
         child: Consumer<LocationProvider>(
-          builder: (context, provider, child) => provider.checkLoading()
+          builder: (context, provider, child) => provider.checkLoading
               ? ListView(
                   children: [
                     SizedBox(height: 20),
