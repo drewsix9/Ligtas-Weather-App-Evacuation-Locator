@@ -38,7 +38,7 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get checkLoading => _isLoading; // TODO: Change into getter
+  bool get checkLoading => _isLoading;
   double get getLattitude => _lattitude;
   double get getLongitude => _longitude;
   int get getCurrentIndex => _currentIndex;

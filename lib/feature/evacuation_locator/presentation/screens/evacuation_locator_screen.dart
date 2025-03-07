@@ -54,19 +54,16 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
           ),
           Consumer<EvacuationLocatorProvider>(
             builder: (context, value, child) {
-              return Visibility(
-                visible: true, // TODO: Show after implementing search
-                child: Positioned.fill(
-                  child: ClipRRect(
-                    child: BackdropFilter(
-                      filter: value.loading
-                          ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
-                          : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
+              return Positioned.fill(
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: value.loading
+                        ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
+                        : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
                   ),
                 ),
