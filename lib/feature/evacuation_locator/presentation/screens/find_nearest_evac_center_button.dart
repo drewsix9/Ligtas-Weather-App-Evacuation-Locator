@@ -31,6 +31,8 @@ class FindNearestEvacCenterButton extends StatelessWidget {
 }
 
 void onClickFindNearestEvacCenter(BuildContext context) {
-  Provider.of<EvacuationLocatorProvider>(context, listen: false)
-      .fetchUserCoordinates();
+  final provider =
+      Provider.of<EvacuationLocatorProvider>(context, listen: false);
+  provider.hideInitialPrompt();
+  provider.fetchUserCoordinates();
 }

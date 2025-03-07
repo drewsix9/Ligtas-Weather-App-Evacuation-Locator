@@ -239,6 +239,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
     LocationPermission locationPermission;
 
     isLoading = true;
+    hideInitialPrompt();
 
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
 

@@ -77,7 +77,14 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: PromptBox(),
+              child: Consumer<EvacuationLocatorProvider>(
+                builder: (context, provider, child) {
+                  return Visibility(
+                    visible: provider.showInitialPrompt,
+                    child: PromptBox(),
+                  );
+                },
+              ),
             ),
           ),
         ],
