@@ -49,6 +49,8 @@ dependencies:
   fluttertoast: ^8.2.12
   flutter_launcher_icons: ^0.14.3
   flutter_native_splash: ^2.4.5
+  shared_preferences: ^2.5.2
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   flutter_test:
