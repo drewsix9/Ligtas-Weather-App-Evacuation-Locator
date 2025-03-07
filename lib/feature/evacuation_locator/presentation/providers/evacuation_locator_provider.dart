@@ -17,6 +17,7 @@ import '../../domain/usecases/haversine_distance_calculation.dart';
 class EvacuationLocatorProvider with ChangeNotifier {
   bool _isLoading = true;
   bool _isMapControllerReady = false;
+  bool _showInitialPrompt = true;
   double _latitude = 0.0;
   double _longitude = 0.0;
   List<latlng.LatLng> _points = [];
@@ -25,6 +26,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
   RouteResponseModel? _routeResponseModel;
   final MapController mapController = MapController();
   Marker? _userLocationMarker;
+  EvacuationCenterModel? _nearestEvacuationCenter;
 
   set isLoading(bool isLoading) {
     _isLoading = isLoading;
@@ -53,35 +55,104 @@ class EvacuationLocatorProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void hideInitialPrompt() {
+    _showInitialPrompt = false;
+    notifyListeners();
+  }
+
   bool get loading => _isLoading;
+  bool get showInitialPrompt => _showInitialPrompt;
   double get lattitude => _latitude;
   double get longitude => _longitude;
   List<latlng.LatLng> get points => _points;
   List<Marker> get markers => _markers;
-
   LatLngBounds? get bounds => _bounds;
   RouteResponseModel? get routeResponseModel => _routeResponseModel;
+  EvacuationCenterModel? get nearestEvacuationCenter =>
+      _nearestEvacuationCenter;
 
   List<Marker> getMarkers() {
     return List<Marker>.from(
       EvacuationCenters.allCenters.map(
-        (e) => Marker(
-          width: 80.0,
-          height: 80.0,
-          point: latlng.LatLng(e.latitude, e.longitude),
-          child: Transform.translate(
-            offset: const Offset(
-              0,
-              -8,
-            ), // Reduced offset for more precise placement
-            child: const Icon(
-              Icons.location_on,
-              color: Colors.redAccent,
-              size: 30.0,
+        (e) {
+          bool isNearestCenter = _nearestEvacuationCenter != null &&
+              e.latitude == _nearestEvacuationCenter!.latitude &&
+              e.longitude == _nearestEvacuationCenter!.longitude;
+          return Marker(
+            width: 150.0,
+            height: 100.0,
+            point: latlng.LatLng(e.latitude, e.longitude),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isNearestCenter)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withAlpha(230),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: Colors.red, width: 2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Text(
+                      'EVACUATE HERE',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 4),
+                isNearestCenter
+                    ? Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // Outer red circle for pulse effect
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.3),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          // Inner red circle
+                          Container(
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.6),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          // Center dot
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ],
+                      )
+                    : const Icon(
+                        Icons.location_on,
+                        color: Colors.redAccent,
+                        size: 30.0,
+                      ),
+              ],
             ),
-          ),
-          // alignment: Alignment.topCenter, // Align to top center of marker space
-        ),
+          );
+        },
       ),
     );
   }
@@ -89,19 +160,70 @@ class EvacuationLocatorProvider with ChangeNotifier {
   void _updateUserLocationMarker() {
     if (_latitude != 0.0 && _longitude != 0.0) {
       _userLocationMarker = Marker(
-        width: 80.0,
-        height: 80.0,
+        width: 150.0,
+        height: 100.0,
         point: latlng.LatLng(_latitude, _longitude),
-        child: Transform.translate(
-          offset:
-              const Offset(0, -8), // Reduced offset for more precise placement
-          child: const Icon(
-            Icons.location_on,
-            color: Colors.blueAccent,
-            size: 30.0,
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha(230),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: Colors.blue, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: const Text(
+                'YOUR LOCATION',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                // Outer blue circle for pulse effect
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.3),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                // Inner blue circle
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.6),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                // Center dot
+                Container(
+                  width: 12,
+                  height: 12,
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-        // alignment: Alignment.topCenter, // Align to top center of marker space
       );
       notifyListeners();
     }
@@ -153,7 +275,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
           HaversineDistanceCalculation.nearestEvac(
         latlng.LatLng(_latitude, _longitude),
       );
-
+      _nearestEvacuationCenter = nearestEvac;
       var response = await http
           .get(
             OpenRouteServiceApi.getRouteUrl(
@@ -234,7 +356,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
       mapController.fitCamera(
         CameraFit.bounds(
           bounds: _bounds!,
-          padding: EdgeInsets.fromLTRB(50, 100, 50, 250),
+          padding: EdgeInsets.symmetric(horizontal: 60, vertical: 120),
         ),
       );
     } else {

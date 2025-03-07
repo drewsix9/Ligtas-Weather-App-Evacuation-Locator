@@ -42,16 +42,13 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
               Polyline(
                 points: evacProvider.points,
                 strokeWidth: 5,
-                color: Colors.blue,
+                color: Colors.green,
               ),
             ],
           ),
-        Visibility(
-          visible: true, // TODO: Show after routing
-          child: Consumer<EvacuationLocatorProvider>(
-            builder: (context, provider, child) => MarkerLayer(
-              markers: provider.markers,
-            ),
+        Consumer<EvacuationLocatorProvider>(
+          builder: (context, provider, child) => MarkerLayer(
+            markers: provider.markers,
           ),
         ),
       ],
