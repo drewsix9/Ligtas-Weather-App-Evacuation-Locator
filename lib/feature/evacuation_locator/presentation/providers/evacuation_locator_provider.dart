@@ -50,6 +50,11 @@ class EvacuationLocatorProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set setNearestEvacuationCenter(EvacuationCenterModel evac) {
+    _nearestEvacuationCenter = evac;
+    notifyListeners();
+  }
+
   void toggleLoading() {
     _isLoading = !_isLoading;
     notifyListeners();
@@ -281,11 +286,12 @@ class EvacuationLocatorProvider with ChangeNotifier {
 
   Future<void> route() async {
     try {
-      EvacuationCenterModel nearestEvac =
-          HaversineDistanceCalculation.nearestEvac(
+      EvacuationCenterModel? nearestEvac =
+          HaversineDistanceCalculation.findNearestEvacuationCenter(
         latlng.LatLng(_latitude, _longitude),
+        EvacuationCenters.allCenters,
       );
-      _nearestEvacuationCenter = nearestEvac;
+      setNearestEvacuationCenter = nearestEvac!;
       var response = await http
           .get(
             OpenRouteServiceApi.getRouteUrl(

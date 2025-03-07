@@ -10,8 +10,6 @@ void showCitySelectionDialog(
   SuggestionProvider suggestionProvider,
   LocationProvider locationProvider,
 ) {
-  final theme = Theme.of(context);
-
   // Use standard custom colors regardless of theme
   final cardBgColor = CustomColors.cardColor;
   final textColor = CustomColors.primaryTextColor;

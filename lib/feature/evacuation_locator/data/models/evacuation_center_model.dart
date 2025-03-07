@@ -10,4 +10,15 @@ class EvacuationCenterModel {
     required this.latitude,
     required this.longitude,
   });
+
+  String toJson() {
+    return '''
+    {
+      "name": "$name",
+      "municipality": "$municipality",
+      "latitude": $latitude,
+      "longitude": $longitude
+    }
+    ''';
+  }
 }

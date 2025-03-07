@@ -72,7 +72,7 @@ class CurrentWeatherWidget extends StatelessWidget {
           children: [
             SizedBox(
               height: 20,
-              width: 60,
+              width: 70,
               child: Text(
                 "${weatherResponse.current!.windSpeed} m/s",
                 style: TextStyle(fontSize: 12),
@@ -81,7 +81,7 @@ class CurrentWeatherWidget extends StatelessWidget {
             ),
             SizedBox(
               height: 20,
-              width: 60,
+              width: 70,
               child: Text(
                 "${weatherResponse.daily![0].rain} mm/H",
                 style: TextStyle(fontSize: 12),
@@ -90,7 +90,7 @@ class CurrentWeatherWidget extends StatelessWidget {
             ),
             SizedBox(
               height: 20,
-              width: 60,
+              width: 70,
               child: Text(
                 "${weatherResponse.current!.humidity} %",
                 style: TextStyle(fontSize: 12),

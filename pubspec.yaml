@@ -47,6 +47,8 @@ dependencies:
   flutter_map: ^8.1.0
   latlong2: ^0.9.1
   fluttertoast: ^8.2.12
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.5
 
 dev_dependencies:
   flutter_test:
