@@ -24,7 +24,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
   List<Marker> _markers = [];
   LatLngBounds? _bounds;
   RouteResponseModel? _routeResponseModel;
-  final MapController mapController = MapController();
+  final MapController _mapController = MapController();
   Marker? _userLocationMarker;
   EvacuationCenterModel? _nearestEvacuationCenter;
 
@@ -33,8 +33,8 @@ class EvacuationLocatorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set setLattitude(double lattitude) {
-    _latitude = lattitude;
+  set setLatitude(double latitude) {
+    _latitude = latitude;
     _updateUserLocationMarker();
     notifyListeners();
   }
@@ -62,7 +62,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
 
   bool get loading => _isLoading;
   bool get showInitialPrompt => _showInitialPrompt;
-  double get lattitude => _latitude;
+  double get latitude => _latitude;
   double get longitude => _longitude;
   List<latlng.LatLng> get points => _points;
   List<Marker> get markers => _markers;
@@ -70,8 +70,89 @@ class EvacuationLocatorProvider with ChangeNotifier {
   RouteResponseModel? get routeResponseModel => _routeResponseModel;
   EvacuationCenterModel? get nearestEvacuationCenter =>
       _nearestEvacuationCenter;
+  MapController get mapController => _mapController;
 
   List<Marker> getMarkers() {
+    return _generateMarkers();
+  }
+
+  void _updateUserLocationMarker() {
+    if (_latitude != 0.0 && _longitude != 0.0) {
+      _userLocationMarker = _createUserLocationMarker();
+      notifyListeners();
+    }
+  }
+
+  Marker _createUserLocationMarker() {
+    return Marker(
+      width: 150.0,
+      height: 100.0,
+      point: latlng.LatLng(_latitude, _longitude),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.white.withAlpha(230),
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: Colors.blue, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: const Text(
+              'YOUR LOCATION',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // Outer blue circle for pulse effect
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.3),
+                  shape: BoxShape.circle,
+                ),
+              ),
+              // Inner blue circle
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.6),
+                  shape: BoxShape.circle,
+                ),
+              ),
+              // Center dot
+              Container(
+                width: 12,
+                height: 12,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Marker> _generateMarkers() {
     return List<Marker>.from(
       EvacuationCenters.allCenters.map(
         (e) {
@@ -92,7 +173,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
                     decoration: BoxDecoration(
                       color: Colors.white.withAlpha(230),
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.red, width: 2),
+                      border: Border.all(color: Colors.redAccent, width: 2),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -120,7 +201,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.3),
+                              color: Colors.redAccent.withOpacity(0.3),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -129,7 +210,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
                             width: 24,
                             height: 24,
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.6),
+                              color: Colors.redAccent.withOpacity(0.6),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -138,7 +219,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
                             width: 12,
                             height: 12,
                             decoration: const BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.redAccent,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -155,78 +236,6 @@ class EvacuationLocatorProvider with ChangeNotifier {
         },
       ),
     );
-  }
-
-  void _updateUserLocationMarker() {
-    if (_latitude != 0.0 && _longitude != 0.0) {
-      _userLocationMarker = Marker(
-        width: 150.0,
-        height: 100.0,
-        point: latlng.LatLng(_latitude, _longitude),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.white.withAlpha(230),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.blue, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: const Text(
-                'YOUR LOCATION',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                // Outer blue circle for pulse effect
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.3),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                // Inner blue circle
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.6),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                // Center dot
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-      notifyListeners();
-    }
   }
 
   void setMapControllerReady() {
@@ -263,7 +272,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
     return await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     ).then((value) {
-      setLattitude = value.latitude;
+      setLatitude = value.latitude;
       setLongitude = value.longitude;
     }).then((_) {
       route();
@@ -354,7 +363,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
   void updateBounds() {
     if (_isMapControllerReady && _bounds != null && _points.isNotEmpty) {
       isLoading = false;
-      mapController.fitCamera(
+      _mapController.fitCamera(
         CameraFit.bounds(
           bounds: _bounds!,
           padding: EdgeInsets.symmetric(horizontal: 60, vertical: 120),
