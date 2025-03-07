@@ -26,35 +26,44 @@ class CurrentWeatherWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-              height: 60,
-              width: 60,
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: CustomColors.cardColor,
-                borderRadius: BorderRadius.circular(15),
+            Tooltip(
+              message: "Wind Speed",
+              child: Container(
+                height: 60,
+                width: 60,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: CustomColors.cardColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.asset("assets/icons/windspeed.png"),
               ),
-              child: Image.asset("assets/icons/windspeed.png"),
             ),
-            Container(
-              height: 60,
-              width: 60,
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: CustomColors.cardColor,
-                borderRadius: BorderRadius.circular(15),
+            Tooltip(
+              message: "Precipitation",
+              child: Container(
+                height: 60,
+                width: 60,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: CustomColors.cardColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.asset("assets/icons/clouds.png"),
               ),
-              child: Image.asset("assets/icons/clouds.png"),
             ),
-            Container(
-              height: 60,
-              width: 60,
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: CustomColors.cardColor,
-                borderRadius: BorderRadius.circular(15),
+            Tooltip(
+              message: "Humidity",
+              child: Container(
+                height: 60,
+                width: 60,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: CustomColors.cardColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.asset("assets/icons/humidity.png"),
               ),
-              child: Image.asset("assets/icons/humidity.png"),
             ),
           ],
         ),
@@ -74,7 +83,7 @@ class CurrentWeatherWidget extends StatelessWidget {
               height: 20,
               width: 60,
               child: Text(
-                "${weatherResponse.current!.clouds} %",
+                "${weatherResponse.daily![0].rain} mm/H",
                 style: TextStyle(fontSize: 12),
                 textAlign: TextAlign.center,
               ),
