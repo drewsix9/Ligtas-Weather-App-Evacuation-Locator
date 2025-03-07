@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:weather_app_evac_locator/feature/evacuation_locator/presentation/providers/evacuation_locator_provider.dart';
 
 import '../../../../core/const/coordinates.dart';
-import '../../domain/usecases/get_markers.dart';
 
 class BuildMapWidget extends StatefulWidget {
   const BuildMapWidget({super.key});
@@ -37,12 +36,6 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'dev.fleaflet.flutter_map.example',
         ),
-        Visibility(
-          visible: true, // TODO: Show after routing
-          child: MarkerLayer(
-            markers: getMarkers(),
-          ),
-        ),
         if (evacProvider.points.isNotEmpty)
           PolylineLayer(
             polylines: [
@@ -53,6 +46,14 @@ class _BuildMapWidgetState extends State<BuildMapWidget> {
               ),
             ],
           ),
+        Visibility(
+          visible: true, // TODO: Show after routing
+          child: Consumer<EvacuationLocatorProvider>(
+            builder: (context, provider, child) => MarkerLayer(
+              markers: provider.markers,
+            ),
+          ),
+        ),
       ],
     );
   }

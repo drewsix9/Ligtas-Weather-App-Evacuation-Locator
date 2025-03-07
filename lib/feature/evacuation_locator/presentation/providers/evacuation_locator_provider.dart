@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart' as latlng;
 import 'package:pretty_print_json/pretty_print_json.dart';
 import 'package:weather_app_evac_locator/feature/evacuation_locator/data/models/evacuation_center_model.dart';
 
+import '../../data/datasources/evacuation_centers.dart';
 import '../../data/models/route_response_model.dart';
 import '../../data/services/openrouteservice_api.dart';
 import '../../domain/usecases/haversine_distance_calculation.dart';
@@ -16,13 +17,14 @@ import '../../domain/usecases/haversine_distance_calculation.dart';
 class EvacuationLocatorProvider with ChangeNotifier {
   bool _isLoading = true;
   bool _isMapControllerReady = false;
-  double _lattitude = 0.0;
+  double _latitude = 0.0;
   double _longitude = 0.0;
   List<latlng.LatLng> _points = [];
-  final List<Marker> _markers = [];
+  List<Marker> _markers = [];
   LatLngBounds? _bounds;
   RouteResponseModel? _routeResponseModel;
   final MapController mapController = MapController();
+  Marker? _userLocationMarker;
 
   set isLoading(bool isLoading) {
     _isLoading = isLoading;
@@ -30,12 +32,14 @@ class EvacuationLocatorProvider with ChangeNotifier {
   }
 
   set setLattitude(double lattitude) {
-    _lattitude = lattitude;
+    _latitude = lattitude;
+    _updateUserLocationMarker();
     notifyListeners();
   }
 
   set setLongitude(double longitude) {
     _longitude = longitude;
+    _updateUserLocationMarker();
     notifyListeners();
   }
 
@@ -50,12 +54,58 @@ class EvacuationLocatorProvider with ChangeNotifier {
   }
 
   bool get loading => _isLoading;
-  double get lattitude => _lattitude;
+  double get lattitude => _latitude;
   double get longitude => _longitude;
   List<latlng.LatLng> get points => _points;
   List<Marker> get markers => _markers;
+
   LatLngBounds? get bounds => _bounds;
   RouteResponseModel? get routeResponseModel => _routeResponseModel;
+
+  List<Marker> getMarkers() {
+    return List<Marker>.from(
+      EvacuationCenters.allCenters.map(
+        (e) => Marker(
+          width: 80.0,
+          height: 80.0,
+          point: latlng.LatLng(e.latitude, e.longitude),
+          child: Transform.translate(
+            offset: const Offset(
+              0,
+              -8,
+            ), // Reduced offset for more precise placement
+            child: const Icon(
+              Icons.location_on,
+              color: Colors.redAccent,
+              size: 30.0,
+            ),
+          ),
+          // alignment: Alignment.topCenter, // Align to top center of marker space
+        ),
+      ),
+    );
+  }
+
+  void _updateUserLocationMarker() {
+    if (_latitude != 0.0 && _longitude != 0.0) {
+      _userLocationMarker = Marker(
+        width: 80.0,
+        height: 80.0,
+        point: latlng.LatLng(_latitude, _longitude),
+        child: Transform.translate(
+          offset:
+              const Offset(0, -8), // Reduced offset for more precise placement
+          child: const Icon(
+            Icons.location_on,
+            color: Colors.blueAccent,
+            size: 30.0,
+          ),
+        ),
+        // alignment: Alignment.topCenter, // Align to top center of marker space
+      );
+      notifyListeners();
+    }
+  }
 
   void setMapControllerReady() {
     _isMapControllerReady = true;
@@ -101,13 +151,13 @@ class EvacuationLocatorProvider with ChangeNotifier {
     try {
       EvacuationCenterModel nearestEvac =
           HaversineDistanceCalculation.nearestEvac(
-        latlng.LatLng(_lattitude, _longitude),
+        latlng.LatLng(_latitude, _longitude),
       );
 
       var response = await http
           .get(
             OpenRouteServiceApi.getRouteUrl(
-              '$_longitude,$_lattitude',
+              '$_longitude,$_latitude',
               '${nearestEvac.longitude},${nearestEvac.latitude}',
             ),
           )
@@ -117,6 +167,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
         setRouteResponseModel = response.body;
         prettyPrintJson(response.body);
         updatePointsAndBounds(_routeResponseModel!);
+        updateMarkers();
       } else {
         Fluttertoast.showToast(
           msg: 'Server error: ${response.statusCode}',
@@ -138,6 +189,13 @@ class EvacuationLocatorProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void updateMarkers() {
+    _markers.clear();
+    _markers = getMarkers();
+    _markers.add(_userLocationMarker!);
+    notifyListeners();
   }
 
   void updatePointsAndBounds(
