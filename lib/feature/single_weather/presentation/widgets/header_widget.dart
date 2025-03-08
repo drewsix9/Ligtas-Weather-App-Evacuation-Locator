@@ -20,8 +20,7 @@ class HeaderWidget extends StatefulWidget {
 class _HeaderWidgetState extends State<HeaderWidget> {
   String city = "Loading location..."; // Default value while loading
   bool isLoadingCity = true;
-  String date = DateFormat.yMMMMd('en_US').format(DateTime.now());
-  String time = "";
+  String formattedDateTime = "";
   String timeZoneName = "";
   late LocationProvider locationProvider;
   late SuggestionProvider suggestionProvider;
@@ -66,9 +65,6 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         locationProvider.getLongitude,
       );
       updateTimeWithOffset();
-      setState(() {
-        date = DateFormat.yMMMMd('en_US').format(DateTime.now());
-      });
     }
   }
 
@@ -81,21 +77,29 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       final offsetInSeconds = widget.weatherResponse.timezoneOffset!;
       final localTime = utcTime.add(Duration(seconds: offsetInSeconds));
 
-      // Format the time
-      final formattedTime = DateFormat('HH:mm').format(localTime);
+      // Format the date and time together
+      final dateFormatter = DateFormat.yMMMMd('en_US');
+      final timeFormatter = DateFormat('HH:mm');
+
+      final formattedDate = dateFormatter.format(localTime);
+      final formattedTime = timeFormatter.format(localTime);
 
       // Get timezone name from offset
       final hours = (offsetInSeconds / 3600).round();
       final timeZoneFormatted = hours >= 0 ? 'GMT+$hours' : 'GMT$hours';
 
       setState(() {
-        time = formattedTime;
+        formattedDateTime = "$formattedDate $formattedTime";
         timeZoneName = timeZoneFormatted;
       });
     } else {
       // Fallback to UTC if no timezone offset is available
+      final now = DateTime.now().toUtc();
+      final formattedDate = DateFormat.yMMMMd('en_US').format(now);
+      final formattedTime = DateFormat('HH:mm').format(now);
+
       setState(() {
-        time = DateFormat('HH:mm').format(DateTime.now().toUtc());
+        formattedDateTime = "$formattedDate $formattedTime";
         timeZoneName = "UTC";
       });
     }
@@ -199,23 +203,13 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
           alignment: Alignment.topLeft,
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(
-                fontSize: 14,
-                color: secondaryTextColor,
-                height: 1.5,
-              ),
-              children: [
-                TextSpan(text: date),
-                TextSpan(
-                  text: " • as of $time ($timeZoneName)",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
+          child: Text(
+            "as of $formattedDateTime ($timeZoneName)",
+            style: TextStyle(
+              fontSize: 14,
+              color: secondaryTextColor,
+              height: 1.5,
+              fontStyle: FontStyle.italic,
             ),
           ),
         ),

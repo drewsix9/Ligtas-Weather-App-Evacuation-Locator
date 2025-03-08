@@ -66,8 +66,11 @@ class CurrentWeatherWidgetShimmer extends StatelessWidget {
     );
   }
 
-  Widget shimmerContainer(BuildContext context,
-      {double width = 60, double height = 60}) {
+  Widget shimmerContainer(
+    BuildContext context, {
+    double width = 60,
+    double height = 60,
+  }) {
     final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
     final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
 
@@ -81,8 +84,11 @@ class CurrentWeatherWidgetShimmer extends StatelessWidget {
     );
   }
 
-  Widget shimmerText(BuildContext context,
-      {double width = 60, double height = 20}) {
+  Widget shimmerText(
+    BuildContext context, {
+    double width = 60,
+    double height = 20,
+  }) {
     final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
     final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
 
