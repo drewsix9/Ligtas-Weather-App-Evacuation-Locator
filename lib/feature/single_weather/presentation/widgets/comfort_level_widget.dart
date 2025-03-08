@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 import '../../../../core/utils/custom_colors.dart';
 import '../../data/model/weather_response/weather_response.dart';
@@ -13,13 +15,23 @@ class ComfortLevelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final dividerColor = Theme.of(context).dividerColor;
+    final firstGradientColor = isDarkMode
+        ? CustomDarkColors.firstGradientColor
+        : CustomColors.firstGradientColor;
+    final secondGradientColor = isDarkMode
+        ? CustomDarkColors.secondGradientColor
+        : CustomColors.secondGradientColor;
+
     return Column(
       children: [
         Container(
           margin: EdgeInsets.only(top: 1, left: 20, right: 20, bottom: 20),
           child: Text(
             "Comfort Level",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18, color: textColor),
           ),
         ),
         SizedBox(
@@ -43,14 +55,18 @@ class ComfortLevelWidget extends StatelessWidget {
                         letterSpacing: 0.1,
                         fontSize: 14,
                         height: 1.5,
+                        color: textColor,
+                      ),
+                      mainLabelStyle: TextStyle(
+                        color: textColor,
                       ),
                     ),
                     animationEnabled: true,
                     size: 140,
                     customColors: CustomSliderColors(
                       progressBarColors: [
-                        CustomColors.firstGradientColor,
-                        CustomColors.secondGradientColor,
+                        firstGradientColor,
+                        secondGradientColor,
                       ],
                       trackColor: Colors.grey,
                       hideShadow: true,
@@ -69,7 +85,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.primaryTextColor,
+                            color: textColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -78,7 +94,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.primaryTextColor,
+                            color: textColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -89,7 +105,7 @@ class ComfortLevelWidget extends StatelessWidget {
                     height: 25,
                     width: 1,
                     margin: EdgeInsets.only(left: 40, right: 40),
-                    color: CustomColors.dividerLine,
+                    color: dividerColor,
                   ),
                   RichText(
                     text: TextSpan(
@@ -99,7 +115,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.primaryTextColor,
+                            color: textColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -108,7 +124,7 @@ class ComfortLevelWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             height: 0.8,
-                            color: CustomColors.primaryTextColor,
+                            color: textColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

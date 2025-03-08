@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../core/utils/custom_colors.dart';
 import '../../data/model/weather_response/weather_response.dart';
 import '../providers/location_provider.dart';
+import '../providers/theme_provider.dart';
 
 class HourlyWeatherWidget extends StatelessWidget {
   final WeatherResponse weatherResponse;
@@ -15,6 +16,8 @@ class HourlyWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+
     return Column(
       children: [
         Container(
@@ -25,15 +28,24 @@ class HourlyWeatherWidget extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Text(
             "Today",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18, color: textColor),
           ),
         ),
-        hourlyList(),
+        hourlyList(context),
       ],
     );
   }
 
-  Widget hourlyList() {
+  Widget hourlyList(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final dividerColor = Theme.of(context).dividerColor;
+    final firstGradientColor = isDarkMode
+        ? CustomDarkColors.firstGradientColor
+        : CustomColors.firstGradientColor;
+    final secondGradientColor = isDarkMode
+        ? CustomDarkColors.secondGradientColor
+        : CustomColors.secondGradientColor;
+
     return Container(
       height: 150,
       padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -56,7 +68,6 @@ class HourlyWeatherWidget extends StatelessWidget {
                     left: 20,
                     right: 5,
                   ),
-                  // padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
@@ -64,14 +75,14 @@ class HourlyWeatherWidget extends StatelessWidget {
                         offset: Offset(0.5, 0),
                         blurRadius: 30,
                         spreadRadius: 1,
-                        color: CustomColors.dividerLine.withAlpha(150),
+                        color: dividerColor.withAlpha(150),
                       ),
                     ],
                     gradient: cardIndex == index
                         ? LinearGradient(
                             colors: [
-                              CustomColors.firstGradientColor,
-                              CustomColors.secondGradientColor,
+                              firstGradientColor,
+                              secondGradientColor,
                             ],
                           )
                         : null,
@@ -119,6 +130,8 @@ class HourlyDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -127,9 +140,7 @@ class HourlyDetails extends StatelessWidget {
           child: Text(
             getTime(timeStamp),
             style: TextStyle(
-              color: cardIndex == index
-                  ? Colors.white
-                  : CustomColors.primaryTextColor,
+              color: cardIndex == index ? Colors.white : textColor,
             ),
           ),
         ),
@@ -146,9 +157,7 @@ class HourlyDetails extends StatelessWidget {
           child: Text(
             "$temp°",
             style: TextStyle(
-              color: cardIndex == index
-                  ? Colors.white
-                  : CustomColors.primaryTextColor,
+              color: cardIndex == index ? Colors.white : textColor,
             ),
           ),
         ),

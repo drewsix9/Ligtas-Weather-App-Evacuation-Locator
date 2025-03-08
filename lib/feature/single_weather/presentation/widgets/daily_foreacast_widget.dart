@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
-import '../../../../core/utils/custom_colors.dart';
 import '../../data/model/weather_response/weather_response.dart';
 
 class DailyForecastWidget extends StatelessWidget {
@@ -15,12 +16,16 @@ class DailyForecastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final dividerColor = Theme.of(context).dividerColor;
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+
     return Container(
       height: 400,
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: CustomColors.dividerLine.withAlpha(150),
+        color: dividerColor.withAlpha(150),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -31,18 +36,20 @@ class DailyForecastWidget extends StatelessWidget {
             child: Text(
               "Next Days",
               style: TextStyle(
-                color: CustomColors.primaryTextColor,
+                color: textColor,
                 fontSize: 17,
               ),
             ),
           ),
-          dailyList(),
+          dailyList(context),
         ],
       ),
     );
   }
 
-  Widget dailyList() {
+  Widget dailyList(BuildContext context) {
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+
     return SizedBox(
       height: 300,
       child: ListView.builder(
@@ -64,7 +71,7 @@ class DailyForecastWidget extends StatelessWidget {
                       child: Text(
                         getDay(weatherResponse!.daily![index].dt!),
                         style: TextStyle(
-                          color: CustomColors.primaryTextColor,
+                          color: textColor,
                           fontSize: 13,
                         ),
                       ),
@@ -79,7 +86,7 @@ class DailyForecastWidget extends StatelessWidget {
                     Text(
                       "${weatherResponse!.daily![index].temp!.max}°/${weatherResponse!.daily![index].temp!.min}°",
                       style: TextStyle(
-                        color: CustomColors.primaryTextColor,
+                        color: textColor,
                         fontSize: 13,
                       ),
                     ),

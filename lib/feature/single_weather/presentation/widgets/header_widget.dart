@@ -3,6 +3,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 import '../../data/model/weather_response/weather_response.dart';
 import '../providers/location_provider.dart';
@@ -59,6 +60,10 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final secondaryTextColor = isDarkMode ? Colors.grey[400] : Colors.grey[700];
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -67,7 +72,11 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           alignment: Alignment.topLeft,
           child: Text(
             city,
-            style: TextStyle(fontSize: 35, height: 2),
+            style: TextStyle(
+              fontSize: 35,
+              height: 2,
+              color: textColor,
+            ),
           ),
         ),
         Container(
@@ -77,7 +86,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             date,
             style: TextStyle(
               fontSize: 14,
-              color: Colors.grey[700],
+              color: secondaryTextColor,
               height: 1.5,
             ),
           ),

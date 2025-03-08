@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app_evac_locator/core/utils/custom_colors.dart';
 import 'package:weather_app_evac_locator/feature/search/domain/usecases/fetch_query.dart';
 import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 void showCitySelectionDialog(
   BuildContext context,
   SuggestionProvider suggestionProvider,
   LocationProvider locationProvider,
 ) {
-  // Use standard custom colors regardless of theme
-  final cardBgColor = CustomColors.cardColor;
-  final textColor = CustomColors.primaryTextColor;
-  final gradientStartColor = CustomColors.firstGradientColor;
-  final gradientEndColor = CustomColors.secondGradientColor;
-  final dividerColor = CustomColors.dividerLine;
+  final isDarkMode =
+      Provider.of<ThemeProvider>(context, listen: false).isToggled;
+
+  // Use theme-aware colors
+  final cardBgColor = Theme.of(context).cardColor;
+  final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+  final dividerColor = Theme.of(context).dividerColor;
+
+  // Use appropriate gradient colors based on theme
+  final gradientStartColor = isDarkMode
+      ? CustomDarkColors.firstGradientColor
+      : CustomColors.firstGradientColor;
+  final gradientEndColor = isDarkMode
+      ? CustomDarkColors.secondGradientColor
+      : CustomColors.secondGradientColor;
 
   showDialog(
     context: context,
@@ -52,7 +63,9 @@ void showCitySelectionDialog(
             decorationBuilder: (context, child) {
               return Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
+                  color: isDarkMode
+                      ? Colors.black.withOpacity(0.3)
+                      : Colors.white.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: dividerColor,
@@ -72,7 +85,7 @@ void showCitySelectionDialog(
               focusNode: focusNode,
               decoration: InputDecoration(
                 hintText: 'Enter city name',
-                hintStyle: TextStyle(color: textColor.withOpacity(0.6)),
+                hintStyle: TextStyle(color: textColor?.withOpacity(0.6)),
                 prefixIcon: Icon(
                   Icons.search,
                   color: gradientStartColor,
@@ -137,7 +150,7 @@ void showCitySelectionDialog(
                       .join(', '),
                   style: TextStyle(
                     fontSize: 14,
-                    color: textColor.withOpacity(0.7),
+                    color: textColor?.withOpacity(0.7),
                   ),
                 ),
                 tileColor: Colors.transparent,

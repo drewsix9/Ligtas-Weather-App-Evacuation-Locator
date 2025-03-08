@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
-import '../../../../core/utils/custom_colors.dart';
 import '../../data/model/weather_response/weather_response.dart';
 
 class CurrentWeatherWidget extends StatelessWidget {
@@ -10,18 +11,20 @@ class CurrentWeatherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 5,
       children: [
-        temperatureAreaWidget(),
+        temperatureAreaWidget(context),
         SizedBox(height: 20),
-        currentWeatherMoreDetailsWidget(),
+        currentWeatherMoreDetailsWidget(context),
       ],
     );
   }
 
-  Widget currentWeatherMoreDetailsWidget() {
+  Widget currentWeatherMoreDetailsWidget(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final cardColor = Theme.of(context).cardColor;
+    final textColor = Theme.of(context).textTheme.bodyMedium?.color;
+
     return Column(
-      spacing: 10,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -33,7 +36,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 width: 60,
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: CustomColors.cardColor,
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Image.asset("assets/icons/windspeed.png"),
@@ -46,7 +49,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 width: 60,
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: CustomColors.cardColor,
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Image.asset("assets/icons/clouds.png"),
@@ -59,7 +62,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 width: 60,
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: CustomColors.cardColor,
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Image.asset("assets/icons/humidity.png"),
@@ -75,7 +78,7 @@ class CurrentWeatherWidget extends StatelessWidget {
               width: 70,
               child: Text(
                 "${weatherResponse.current!.windSpeed} m/s",
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 12, color: textColor),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -84,7 +87,7 @@ class CurrentWeatherWidget extends StatelessWidget {
               width: 70,
               child: Text(
                 "${weatherResponse.daily![0].rain} mm/H",
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 12, color: textColor),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -93,7 +96,7 @@ class CurrentWeatherWidget extends StatelessWidget {
               width: 70,
               child: Text(
                 "${weatherResponse.current!.humidity} %",
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 12, color: textColor),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -103,7 +106,12 @@ class CurrentWeatherWidget extends StatelessWidget {
     );
   }
 
-  Widget temperatureAreaWidget() {
+  Widget temperatureAreaWidget(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final dividerColor = Theme.of(context).dividerColor;
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final secondaryTextColor = isDarkMode ? Colors.grey[400] : Colors.grey[600];
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -112,7 +120,7 @@ class CurrentWeatherWidget extends StatelessWidget {
           height: 80,
           width: 80,
         ),
-        Container(height: 50, width: 1, color: CustomColors.dividerLine),
+        Container(height: 50, width: 1, color: dividerColor),
         RichText(
           text: TextSpan(
             children: [
@@ -121,7 +129,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 68,
-                  color: CustomColors.primaryTextColor,
+                  color: textColor,
                 ),
               ),
               TextSpan(
@@ -129,7 +137,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
-                  color: Colors.grey,
+                  color: secondaryTextColor,
                 ),
               ),
             ],

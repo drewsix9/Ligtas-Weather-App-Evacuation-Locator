@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 class HourlyWeatherWidgetShimmer extends StatelessWidget {
   const HourlyWeatherWidgetShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
+
     return Column(
       children: [
         Container(
@@ -19,16 +24,20 @@ class HourlyWeatherWidgetShimmer extends StatelessWidget {
             height: 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[300],
+              color: baseColor,
             ),
           ),
         ),
-        hourlyListShimmer(),
+        hourlyListShimmer(context),
       ],
     );
   }
 
-  Widget hourlyListShimmer() {
+  Widget hourlyListShimmer(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
+    final highlightColor = isDarkMode ? Colors.grey[600]! : Colors.grey[100]!;
+
     return Container(
       height: 150,
       padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -37,8 +46,8 @@ class HourlyWeatherWidgetShimmer extends StatelessWidget {
         itemCount: 12,
         itemBuilder: (context, index) {
           return Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
+            baseColor: baseColor,
+            highlightColor: highlightColor,
             child: Container(
               width: 90,
               margin: EdgeInsets.only(
@@ -47,7 +56,7 @@ class HourlyWeatherWidgetShimmer extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.grey[300],
+                color: baseColor,
               ),
             ),
           );
@@ -57,10 +66,14 @@ class HourlyWeatherWidgetShimmer extends StatelessWidget {
   }
 }
 
-Widget hourlyDetailsShimmer() {
+Widget hourlyDetailsShimmer(BuildContext context) {
+  final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+  final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
+  final highlightColor = isDarkMode ? Colors.grey[600]! : Colors.grey[100]!;
+
   return Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
+    baseColor: baseColor,
+    highlightColor: highlightColor,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -68,19 +81,19 @@ Widget hourlyDetailsShimmer() {
           margin: EdgeInsets.only(top: 10),
           width: 50,
           height: 10,
-          color: Colors.grey[300],
+          color: baseColor,
         ),
         Container(
           margin: EdgeInsets.all(5),
           height: 40,
           width: 40,
-          color: Colors.grey[300],
+          color: baseColor,
         ),
         Container(
           margin: EdgeInsets.only(bottom: 10),
           width: 30,
           height: 10,
-          color: Colors.grey[300],
+          color: baseColor,
         ),
       ],
     ),

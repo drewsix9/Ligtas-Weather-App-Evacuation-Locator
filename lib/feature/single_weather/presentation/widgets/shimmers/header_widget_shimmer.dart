@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 class HeaderWidgetShimmer extends StatelessWidget {
   const HeaderWidgetShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
+    final highlightColor = isDarkMode ? Colors.grey[600]! : Colors.grey[100]!;
+
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -19,7 +25,7 @@ class HeaderWidgetShimmer extends StatelessWidget {
               width: 220,
               height: 50,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: baseColor,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -32,7 +38,7 @@ class HeaderWidgetShimmer extends StatelessWidget {
               width: 150,
               height: 14,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: baseColor,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),

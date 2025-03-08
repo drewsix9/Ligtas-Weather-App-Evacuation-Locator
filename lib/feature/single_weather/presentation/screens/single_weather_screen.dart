@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
+import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/theme_toggle_button.dart';
 
-import '../../../../core/utils/custom_colors.dart';
 import '../../../search/presentation/providers/suggestion_provider.dart';
 import '../../../search/presentation/widgets/show_city_selection_dialog.dart';
 import '../providers/location_provider.dart';
@@ -44,6 +44,12 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final suggestionProvider = Provider.of<SuggestionProvider>(context);
+    final locationProvider = Provider.of<LocationProvider>(context);
+    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final dividerColor = Theme.of(context).dividerColor;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
@@ -58,16 +64,18 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
           },
           icon: Icon(
             Icons.search_rounded,
-            color: CustomColors.primaryTextColor,
+            color: textColor,
           ),
         ),
-        actions: [],
+        actions: [
+          ThemeToggleButton(),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           'Weather',
           style: TextStyle(
-            color: CustomColors.primaryTextColor,
+            color: textColor,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
@@ -87,7 +95,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
                     DailyForecastWidgetShimmer(),
                     Container(
                       height: 1,
-                      color: CustomColors.dividerLine,
+                      color: dividerColor,
                     ),
                   ],
                 )
@@ -110,7 +118,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
                     ),
                     Container(
                       height: 1,
-                      color: CustomColors.dividerLine,
+                      color: dividerColor,
                     ),
                     SizedBox(
                       height: 10,
