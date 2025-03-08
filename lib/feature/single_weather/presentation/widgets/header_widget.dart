@@ -18,13 +18,20 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  String city = "";
+  String city = "Loading location..."; // Default value while loading
+  bool isLoadingCity = true;
   String date = DateFormat.yMMMMd('en_US').format(DateTime.now());
+  String time = "";
+  String timeZoneName = "";
   late LocationProvider locationProvider;
   late SuggestionProvider suggestionProvider;
 
   @override
   void initState() {
+    super.initState();
+    // Set initial city from weather data immediately
+    _setInitialCity();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       locationProvider = context.read<LocationProvider>();
       suggestionProvider = context.read<SuggestionProvider>();
@@ -32,30 +39,116 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         locationProvider.getLattitude,
         locationProvider.getLongitude,
       );
+      updateTimeWithOffset();
     });
-    super.initState();
+  }
+
+  void _setInitialCity() {
+    // Use timezone from weather data as initial city name
+    if (widget.weatherResponse.timezone != null) {
+      String initialCity =
+          widget.weatherResponse.timezone!.split('/').last.replaceAll('_', ' ');
+      setState(() {
+        city = initialCity;
+      });
+    }
   }
 
   @override
   void didUpdateWidget(covariant HeaderWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.weatherResponse != widget.weatherResponse) {
+      // Set city from weather data immediately when data changes
+      _setInitialCity();
+
       getAddress(
         locationProvider.getLattitude,
         locationProvider.getLongitude,
       );
+      updateTimeWithOffset();
       setState(() {
         date = DateFormat.yMMMMd('en_US').format(DateTime.now());
       });
     }
   }
 
+  void updateTimeWithOffset() {
+    if (widget.weatherResponse.timezoneOffset != null) {
+      // Get current UTC time
+      final utcTime = DateTime.now().toUtc();
+
+      // Apply timezone offset (in seconds) to get local time
+      final offsetInSeconds = widget.weatherResponse.timezoneOffset!;
+      final localTime = utcTime.add(Duration(seconds: offsetInSeconds));
+
+      // Format the time
+      final formattedTime = DateFormat('HH:mm').format(localTime);
+
+      // Get timezone name from offset
+      final hours = (offsetInSeconds / 3600).round();
+      final timeZoneFormatted = hours >= 0 ? 'GMT+$hours' : 'GMT$hours';
+
+      setState(() {
+        time = formattedTime;
+        timeZoneName = timeZoneFormatted;
+      });
+    } else {
+      // Fallback to UTC if no timezone offset is available
+      setState(() {
+        time = DateFormat('HH:mm').format(DateTime.now().toUtc());
+        timeZoneName = "UTC";
+      });
+    }
+  }
+
   getAddress(lat, lon) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
-    Placemark place = placemarks[0];
     setState(() {
-      city = place.locality!;
+      isLoadingCity = true;
     });
+
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+
+        // Use locality if available, otherwise try other fields
+        if (place.locality != null && place.locality!.isNotEmpty) {
+          setState(() {
+            city = place.locality!;
+            isLoadingCity = false;
+          });
+        } else if (place.subAdministrativeArea != null &&
+            place.subAdministrativeArea!.isNotEmpty) {
+          setState(() {
+            city = place.subAdministrativeArea!;
+            isLoadingCity = false;
+          });
+        } else if (place.administrativeArea != null &&
+            place.administrativeArea!.isNotEmpty) {
+          setState(() {
+            city = place.administrativeArea!;
+            isLoadingCity = false;
+          });
+        } else {
+          // Keep using the initial city name from timezone
+          setState(() {
+            isLoadingCity = false;
+          });
+        }
+      } else {
+        // No placemarks found, keep using the initial city name
+        setState(() {
+          isLoadingCity = false;
+        });
+      }
+    } catch (e) {
+      print('Error getting location name: $e');
+      // Keep using the initial city name
+      setState(() {
+        isLoadingCity = false;
+      });
+    }
   }
 
   @override
@@ -70,24 +163,59 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         Container(
           margin: EdgeInsets.only(left: 20, right: 20),
           alignment: Alignment.topLeft,
-          child: Text(
-            city,
-            style: TextStyle(
-              fontSize: 35,
-              height: 2,
-              color: textColor,
-            ),
-          ),
+          child: isLoadingCity
+              ? Row(
+                  children: [
+                    Text(
+                      city,
+                      style: TextStyle(
+                        fontSize: 35,
+                        height: 2,
+                        color: textColor,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          secondaryTextColor ?? Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Text(
+                  city,
+                  style: TextStyle(
+                    fontSize: 35,
+                    height: 2,
+                    color: textColor,
+                  ),
+                ),
         ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
           alignment: Alignment.topLeft,
-          child: Text(
-            date,
-            style: TextStyle(
-              fontSize: 14,
-              color: secondaryTextColor,
-              height: 1.5,
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 14,
+                color: secondaryTextColor,
+                height: 1.5,
+              ),
+              children: [
+                TextSpan(text: date),
+                TextSpan(
+                  text: " • as of $time ($timeZoneName)",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

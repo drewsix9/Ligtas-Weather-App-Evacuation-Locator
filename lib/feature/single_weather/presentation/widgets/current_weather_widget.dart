@@ -86,7 +86,7 @@ class CurrentWeatherWidget extends StatelessWidget {
               height: 20,
               width: 70,
               child: Text(
-                "${weatherResponse.daily![0].rain} mm/H",
+                "${weatherResponse.daily?[0].rain ?? 0} mm/h",
                 style: TextStyle(fontSize: 12, color: textColor),
                 textAlign: TextAlign.center,
               ),
