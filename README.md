@@ -1,4 +1,4 @@
-# _Ligtas_ : Weather App & Evacuation Locator v1.0 Release
+# _Ligtas_ : Weather App & Evacuation Locator
 
 ### Overview
 Our Weather App & Evacuation Locator provides real-time weather information while helping users locate nearby evacuation centers during emergencies. This first public release delivers essential features for personal safety and preparedness.
