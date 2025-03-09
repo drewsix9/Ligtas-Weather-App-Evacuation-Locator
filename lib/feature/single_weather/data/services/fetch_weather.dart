@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../model/weather_response/weather_response.dart';
 
 class FetchWeatherApi {
-  static final String apiKey = String.fromEnvironment('OPENWEATHER_API_KEY');
+  static const String apiKey = String.fromEnvironment('OPENWEATHER_API_KEY');
 
   WeatherResponse? weatherResponse;
 

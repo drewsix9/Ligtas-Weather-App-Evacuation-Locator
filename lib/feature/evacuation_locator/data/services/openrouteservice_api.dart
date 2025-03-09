@@ -1,5 +1,5 @@
 class OpenRouteServiceApi {
-  static final String apiKey =
+  static const String apiKey =
       String.fromEnvironment('OPENROUTESERVICE_API_KEY');
 
   static const String routeBaseUrl =
