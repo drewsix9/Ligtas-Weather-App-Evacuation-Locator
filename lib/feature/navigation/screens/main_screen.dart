@@ -34,13 +34,18 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.cloud),
+            icon:
+                Icon(_selectedIndex == 0 ? Icons.cloud : Icons.cloud_outlined),
             label: 'Weather',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.location_on),
+            icon: Icon(
+              _selectedIndex == 1
+                  ? Icons.location_on
+                  : Icons.location_on_outlined,
+            ),
             label: 'Evacuation',
           ),
         ],

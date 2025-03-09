@@ -255,6 +255,8 @@ class EvacuationLocatorProvider with ChangeNotifier {
     isLoading = true;
     hideInitialPrompt();
 
+    clearRouteData();
+
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!isServiceEnabled) {
@@ -380,5 +382,20 @@ class EvacuationLocatorProvider with ChangeNotifier {
       isLoading = false;
       print('MapController is not ready yet or bounds is invalid.');
     }
+  }
+
+  // Clear resources when done
+  @override
+  void dispose() {
+    _mapController.dispose();
+    // Clear any other resources that need cleanup
+    super.dispose();
+  }
+
+  // Clear route points to free memory
+  void clearRouteData() {
+    _points = [];
+    _routeResponseModel = null;
+    notifyListeners();
   }
 }

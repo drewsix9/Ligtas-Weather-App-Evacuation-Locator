@@ -83,59 +83,53 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
       ),
       body: SafeArea(
         child: Consumer<LocationProvider>(
-          builder: (context, provider, child) => provider.checkLoading
-              ? ListView(
-                  children: [
-                    SizedBox(height: 20),
-                    HeaderWidgetShimmer(),
-                    CurrentWeatherWidgetShimmer(),
-                    SizedBox(height: 20),
-                    HourlyWeatherWidgetShimmer(),
-                    DailyForecastWidgetShimmer(),
-                    Container(
-                      height: 1,
-                      color: dividerColor,
-                    ),
-                  ],
-                )
-              : ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    SizedBox(height: 20),
-                    HeaderWidget(
-                      weatherResponse: provider.weatherResponse!,
-                    ),
-                    CurrentWeatherWidget(
-                      weatherResponse: provider.weatherResponse!,
-                    ),
-                    SizedBox(height: 20),
-                    HourlyWeatherWidget(
-                      weatherResponse: provider.weatherResponse!,
-                    ),
-                    DailyForecastWidget(
-                      weatherResponse: provider.weatherResponse!,
-                    ),
-                    Container(
-                      height: 1,
-                      color: dividerColor,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ComfortLevelWidget(
-                      weatherResponse: provider.weatherResponse!,
-                    ),
-                  ],
+          builder: (context, provider, child) {
+            final spacer = const SizedBox(height: 20);
+            final divider = Container(
+              height: 1,
+              color: dividerColor,
+            );
+
+            if (provider.checkLoading) {
+              return ListView(
+                children: const [
+                  SizedBox(height: 20),
+                  HeaderWidgetShimmer(),
+                  CurrentWeatherWidgetShimmer(),
+                  SizedBox(height: 20),
+                  HourlyWeatherWidgetShimmer(),
+                  DailyForecastWidgetShimmer(),
+                ],
+              );
+            }
+
+            return ListView(
+              scrollDirection: Axis.vertical,
+              children: [
+                spacer,
+                HeaderWidget(
+                  weatherResponse: provider.weatherResponse!,
                 ),
+                CurrentWeatherWidget(
+                  weatherResponse: provider.weatherResponse!,
+                ),
+                spacer,
+                HourlyWeatherWidget(
+                  weatherResponse: provider.weatherResponse!,
+                ),
+                DailyForecastWidget(
+                  weatherResponse: provider.weatherResponse!,
+                ),
+                divider,
+                const SizedBox(height: 10),
+                ComfortLevelWidget(
+                  weatherResponse: provider.weatherResponse!,
+                ),
+              ],
+            );
+          },
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     locationProvider.toggleLoading();
-      //     print("${locationProvider.checkLoading()}");
-      //   },
-      //   child: const Icon(Icons.refresh),
-      // ),
     );
   }
 }
