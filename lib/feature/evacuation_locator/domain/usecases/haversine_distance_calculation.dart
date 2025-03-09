@@ -38,4 +38,40 @@ class HaversineDistanceCalculation {
 
     return nearestCenter;
   }
+
+  /// Find the top N nearest evacuation centers based on haversine distance
+  static List<EvacuationCenterModel> findTopNNearestCenters(
+    latlng.LatLng userLocation,
+    List<EvacuationCenterModel> allCenters, {
+    int n = 3,
+  }) {
+    if (allCenters.isEmpty) {
+      return [];
+    }
+
+    // Create a list of centers with their distances
+    final centersWithDistances = allCenters.map((center) {
+      final centerLocation = latlng.LatLng(center.latitude, center.longitude);
+      final distance = Distance().as(
+        LengthUnit.Meter,
+        userLocation,
+        centerLocation,
+      );
+      return {'center': center, 'distance': distance};
+    }).toList();
+
+    // Sort by distance
+    centersWithDistances.sort(
+      (a, b) => (a['distance'] as double).compareTo(b['distance'] as double),
+    );
+
+    // Take the top N centers (or fewer if there aren't enough)
+    final actualN =
+        n > centersWithDistances.length ? centersWithDistances.length : n;
+
+    return centersWithDistances
+        .sublist(0, actualN)
+        .map((item) => item['center'] as EvacuationCenterModel)
+        .toList();
+  }
 }

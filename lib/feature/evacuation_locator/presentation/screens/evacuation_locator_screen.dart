@@ -58,11 +58,14 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
             child: BuildMapWidget(),
           ),
           Consumer<EvacuationLocatorProvider>(
-            builder: (context, value, child) {
+            builder: (context, provider, child) {
+              // Show blur when either loading or processing routes
+              final shouldBlur =
+                  provider.loading || provider.isProcessingRoutes;
               return Positioned.fill(
                 child: ClipRRect(
                   child: BackdropFilter(
-                    filter: value.loading
+                    filter: shouldBlur
                         ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
                         : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
                     child: Container(
@@ -73,6 +76,53 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
                   ),
                 ),
               );
+            },
+          ),
+          // Progress indicator and message for route processing
+          Consumer<EvacuationLocatorProvider>(
+            builder: (context, provider, child) {
+              if (provider.isProcessingRoutes) {
+                return Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircularProgressIndicator(
+                          value: provider.processProgress > 0
+                              ? provider.processProgress
+                              : null,
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Finding optimal evacuation route...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Analyzing closest centers',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
             },
           ),
           Align(

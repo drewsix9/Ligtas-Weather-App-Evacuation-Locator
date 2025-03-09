@@ -28,6 +28,12 @@ class EvacuationLocatorProvider with ChangeNotifier {
   Marker? _userLocationMarker;
   EvacuationCenterModel? _nearestEvacuationCenter;
 
+  // Add properties to track route-finding process
+  final int _topCentersCount = 3;
+  List<EvacuationCenterModel> _topNearestCenters = [];
+  bool _isProcessingRoutes = false;
+  double _processProgress = 0.0;
+
   set isLoading(bool isLoading) {
     _isLoading = isLoading;
     notifyListeners();
@@ -76,6 +82,10 @@ class EvacuationLocatorProvider with ChangeNotifier {
   EvacuationCenterModel? get nearestEvacuationCenter =>
       _nearestEvacuationCenter;
   MapController get mapController => _mapController;
+
+  bool get isProcessingRoutes => _isProcessingRoutes;
+  double get processProgress => _processProgress;
+  List<EvacuationCenterModel> get topNearestCenters => _topNearestCenters;
 
   List<Marker> getMarkers() {
     return _generateMarkers();
@@ -253,6 +263,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
     LocationPermission locationPermission;
 
     isLoading = true;
+    _isProcessingRoutes = true;
     hideInitialPrompt();
 
     clearRouteData();
@@ -288,34 +299,119 @@ class EvacuationLocatorProvider with ChangeNotifier {
 
   Future<void> route() async {
     try {
-      EvacuationCenterModel? nearestEvac =
-          HaversineDistanceCalculation.findNearestEvacuationCenter(
+      // Step 1: Find the top N nearest centers based on haversine distance
+      _topNearestCenters = HaversineDistanceCalculation.findTopNNearestCenters(
         latlng.LatLng(_latitude, _longitude),
         EvacuationCenters.allCenters,
+        n: _topCentersCount,
       );
-      setNearestEvacuationCenter = nearestEvac!;
-      var response = await http
-          .get(
-            OpenRouteServiceApi.getRouteUrl(
-              '$_longitude,$_latitude',
-              '${nearestEvac.longitude},${nearestEvac.latitude}',
-            ),
-          )
-          .timeout(const Duration(seconds: 15)); // Add timeout
 
-      if (response.statusCode == 200) {
-        setRouteResponseModel = response.body;
-        prettyPrintJson(response.body);
-        updatePointsAndBounds(_routeResponseModel!);
-        updateMarkers();
-      } else {
+      if (_topNearestCenters.isEmpty) {
         Fluttertoast.showToast(
-          msg: 'Server error: ${response.statusCode}',
+          msg: 'No evacuation centers found',
           backgroundColor: const Color(0xFFFFCDD2),
           textColor: const Color(0xFFB71C1C),
         );
-        print('API Error: ${response.statusCode}, ${response.body}');
+        isLoading = false;
+        return;
       }
+
+      _processProgress = 0.0;
+      notifyListeners();
+
+      // Step 2: Request routes to each of the top centers and find the one with shortest route
+      RouteResponseModel? shortestRouteResponse;
+      EvacuationCenterModel? centerWithShortestRoute;
+      double? shortestRouteDistance;
+
+      // Process each center
+      for (int i = 0; i < _topNearestCenters.length; i++) {
+        final center = _topNearestCenters[i];
+
+        try {
+          // Update progress
+          _processProgress = i / _topNearestCenters.length;
+          notifyListeners();
+
+          final response = await http
+              .get(
+                OpenRouteServiceApi.getRouteUrl(
+                  '$_longitude,$_latitude',
+                  '${center.longitude},${center.latitude}',
+                ),
+              )
+              .timeout(const Duration(seconds: 15));
+
+          if (response.statusCode == 200) {
+            final routeModel =
+                RouteResponseModel.fromJson(json.decode(response.body));
+
+            // Check if this route is valid
+            if (routeModel.features.isNotEmpty) {
+              final distance =
+                  routeModel.features[0].properties.summary.distance;
+
+              // Print center name and distance for debugging
+              print(
+                'Center: ${center.name}, Distance: ${distance.toStringAsFixed(2)} meters',
+              );
+
+              // If this is the first valid route or it's shorter than the current shortest
+              if (shortestRouteDistance == null ||
+                  distance < shortestRouteDistance) {
+                shortestRouteDistance = distance;
+                shortestRouteResponse = routeModel;
+                centerWithShortestRoute = center;
+              }
+            }
+          }
+        } catch (e) {
+          print('Error requesting route to center ${center.name}: $e');
+          // Continue to the next center
+        }
+      }
+
+      print("Center with shortest route: ${centerWithShortestRoute?.name}");
+
+      // Step 3: Use the center with the shortest route
+      if (centerWithShortestRoute != null && shortestRouteResponse != null) {
+        setNearestEvacuationCenter = centerWithShortestRoute;
+        _routeResponseModel = shortestRouteResponse;
+        prettyPrintJson(json.encode(_routeResponseModel!.toJson()));
+        updatePointsAndBounds(_routeResponseModel!);
+        updateMarkers();
+      } else {
+        // Fallback to the physically nearest center if route calculation failed
+        EvacuationCenterModel? nearestEvac =
+            _topNearestCenters.isNotEmpty ? _topNearestCenters[0] : null;
+
+        if (nearestEvac != null) {
+          setNearestEvacuationCenter = nearestEvac;
+
+          final response = await http
+              .get(
+                OpenRouteServiceApi.getRouteUrl(
+                  '$_longitude,$_latitude',
+                  '${nearestEvac.longitude},${nearestEvac.latitude}',
+                ),
+              )
+              .timeout(const Duration(seconds: 15));
+
+          if (response.statusCode == 200) {
+            setRouteResponseModel = response.body;
+            prettyPrintJson(response.body);
+            updatePointsAndBounds(_routeResponseModel!);
+            updateMarkers();
+          } else {
+            throw Exception('Server error: ${response.statusCode}');
+          }
+        } else {
+          throw Exception('No evacuation centers available');
+        }
+      }
+      _isProcessingRoutes = false;
+      _processProgress = 1.0;
+      notifyListeners();
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Network error. Please check your internet connection.',
@@ -326,6 +422,7 @@ class EvacuationLocatorProvider with ChangeNotifier {
       _points = [];
       _bounds = null;
     } finally {
+      _isProcessingRoutes = false;
       isLoading = false;
       notifyListeners();
     }
