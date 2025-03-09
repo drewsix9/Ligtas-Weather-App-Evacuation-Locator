@@ -20,7 +20,6 @@ class CurrentWeatherWidget extends StatelessWidget {
   }
 
   Widget currentWeatherMoreDetailsWidget(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
     final cardColor = Theme.of(context).cardColor;
     final textColor = Theme.of(context).textTheme.bodyMedium?.color;
 

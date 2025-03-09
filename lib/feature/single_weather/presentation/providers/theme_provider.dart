@@ -6,7 +6,7 @@ import '../../../../core/utils/themes.dart';
 class ThemeProvider extends ChangeNotifier {
   bool _isToggled = false;
   ThemeData _currentTheme = Themes.lightmode;
-  static const String THEME_KEY = 'theme_preference';
+  static const String themeKey = 'theme_preference';
 
   bool get isToggled => _isToggled;
   ThemeData get currentTheme => _currentTheme;
@@ -18,7 +18,7 @@ class ThemeProvider extends ChangeNotifier {
   // Load saved theme preference
   Future<void> _loadThemePreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isDarkMode = prefs.getBool(THEME_KEY) ?? false;
+    bool isDarkMode = prefs.getBool(themeKey) ?? false;
 
     _isToggled = isDarkMode;
     _currentTheme = isDarkMode ? Themes.darkmode : Themes.lightmode;
@@ -28,7 +28,7 @@ class ThemeProvider extends ChangeNotifier {
   // Save theme preference
   Future<void> _saveThemePreference(bool isDarkMode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(THEME_KEY, isDarkMode);
+    await prefs.setBool(themeKey, isDarkMode);
   }
 
   void toggleTheme() {

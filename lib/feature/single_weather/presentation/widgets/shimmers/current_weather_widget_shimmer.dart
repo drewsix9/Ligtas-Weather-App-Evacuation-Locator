@@ -26,9 +26,6 @@ class CurrentWeatherWidgetShimmer extends StatelessWidget {
   }
 
   Widget currentWeatherMoreDetailsWidget(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
-    final baseColor = isDarkMode ? Colors.grey[700]! : Colors.grey[300]!;
-
     return Column(
       children: [
         Row(

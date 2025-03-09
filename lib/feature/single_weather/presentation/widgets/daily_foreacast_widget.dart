@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 import '../../data/model/weather_response/weather_response.dart';
 
@@ -16,7 +14,6 @@ class DailyForecastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
     final dividerColor = Theme.of(context).dividerColor;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
 

@@ -46,7 +46,6 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
   Widget build(BuildContext context) {
     final suggestionProvider = Provider.of<SuggestionProvider>(context);
     final locationProvider = Provider.of<LocationProvider>(context);
-    final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
     final dividerColor = Theme.of(context).dividerColor;
 

@@ -128,8 +128,6 @@ void showCitySelectionDialog(
               if (stateName.isNotEmpty) locationParts.add(stateName);
               if (countryName.isNotEmpty) locationParts.add(countryName);
 
-              String location = locationParts.join(', ');
-
               return ListTile(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,

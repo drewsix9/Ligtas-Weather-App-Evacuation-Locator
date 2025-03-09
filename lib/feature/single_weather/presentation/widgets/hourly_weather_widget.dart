@@ -105,21 +105,14 @@ class HourlyWeatherWidget extends StatelessWidget {
   }
 }
 
-class HourlyDetails extends StatelessWidget {
+class HourlyDetails extends StatefulWidget {
   final int temp;
   final int timeStamp;
   final String weatherIcon;
-  int index;
-  int cardIndex;
+  final int index;
+  final int cardIndex;
 
-  String getTime(final timeStamp) {
-    var date = DateTime.fromMillisecondsSinceEpoch(
-      timeStamp * 1000,
-    );
-    return DateFormat("jm").format(date);
-  }
-
-  HourlyDetails({
+  const HourlyDetails({
     super.key,
     required this.temp,
     required this.timeStamp,
@@ -127,6 +120,18 @@ class HourlyDetails extends StatelessWidget {
     required this.index,
     required this.cardIndex,
   });
+
+  @override
+  State<HourlyDetails> createState() => _HourlyDetailsState();
+}
+
+class _HourlyDetailsState extends State<HourlyDetails> {
+  String getTime(final timeStamp) {
+    var date = DateTime.fromMillisecondsSinceEpoch(
+      timeStamp * 1000,
+    );
+    return DateFormat("jm").format(date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +143,10 @@ class HourlyDetails extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(top: 10),
           child: Text(
-            getTime(timeStamp),
+            getTime(widget.timeStamp),
             style: TextStyle(
-              color: cardIndex == index ? Colors.white : textColor,
+              color:
+                  widget.cardIndex == widget.index ? Colors.white : textColor,
             ),
           ),
         ),
@@ -149,15 +155,16 @@ class HourlyDetails extends StatelessWidget {
           height: 40,
           width: 40,
           child: Image.asset(
-            "assets/weather_icons/$weatherIcon.png",
+            "assets/weather_icons/${widget.weatherIcon}.png",
           ),
         ),
         Container(
           margin: EdgeInsets.only(bottom: 10),
           child: Text(
-            "$temp°",
+            "${widget.temp}°",
             style: TextStyle(
-              color: cardIndex == index ? Colors.white : textColor,
+              color:
+                  widget.cardIndex == widget.index ? Colors.white : textColor,
             ),
           ),
         ),
