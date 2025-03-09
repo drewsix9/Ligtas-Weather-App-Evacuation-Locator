@@ -371,7 +371,9 @@ class EvacuationLocatorProvider with ChangeNotifier {
         }
       }
 
-      print("Center with shortest route: ${centerWithShortestRoute?.name}");
+      print(
+        "Center with shortest route: ${centerWithShortestRoute?.name} ${shortestRouteDistance?.toStringAsFixed(2)} meters",
+      );
 
       // Step 3: Use the center with the shortest route
       if (centerWithShortestRoute != null && shortestRouteResponse != null) {
