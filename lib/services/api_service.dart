@@ -7,7 +7,9 @@ import '../utils/api_key_storage.dart';
 class ApiService {
   // Example of using the API key in a weather service
   static Future<Map<String, dynamic>> getWeatherData(
-      double lat, double lon) async {
+    double lat,
+    double lon,
+  ) async {
     final apiKey = await ApiKeyStorage.getApiKey('weather');
 
     if (apiKey == null) {
