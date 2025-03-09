@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_evac_locator/core/utils/custom_colors.dart';
-import 'package:weather_app_evac_locator/feature/search/domain/usecases/fetch_query.dart';
+import 'package:weather_app_evac_locator/feature/search/data/services/fetch_query.dart';
 import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
@@ -110,14 +110,14 @@ void showCitySelectionDialog(
               ),
               style: TextStyle(fontSize: 16, color: textColor),
             ),
-            loadingBuilder: (context) => Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(gradientStartColor),
-                ),
-              ),
-            ),
+            // loadingBuilder: (context) => Center(
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(vertical: 16),
+            //     child: CircularProgressIndicator(
+            //       valueColor: AlwaysStoppedAnimation<Color>(gradientStartColor),
+            //     ),
+            //   ),
+            // ),
             itemBuilder: (context, suggestion) {
               String cityName = suggestion['name'] ?? '';
               String stateName = suggestion['state'] ?? '';
@@ -151,11 +151,11 @@ void showCitySelectionDialog(
                     color: textColor?.withOpacity(0.7),
                   ),
                 ),
-                tileColor: Colors.transparent,
+                tileColor: isDarkMode ? Colors.grey[800] : Colors.grey[50],
                 hoverColor: gradientStartColor.withOpacity(0.1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(8),
+                // ),
               );
             },
             onSelected: (city) {

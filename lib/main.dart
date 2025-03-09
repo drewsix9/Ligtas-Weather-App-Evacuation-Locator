@@ -7,7 +7,6 @@ import 'package:weather_app_evac_locator/feature/navigation/screens/main_screen.
 import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
-import 'package:weather_app_evac_locator/utils/api_key_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,9 +16,6 @@ void main() async {
   } catch (e) {
     print('Error loading .env file: $e');
   }
-
-  // Initialize API keys on app startup
-  await ApiKeyStorage.initializeDefaultApiKeys();
 
   // Set immersive sticky mode - hides system bars but they can be revealed with a swipe
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);

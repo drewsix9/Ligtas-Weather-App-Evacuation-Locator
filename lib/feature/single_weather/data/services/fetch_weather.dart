@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-import '../../data/model/weather_response/weather_response.dart';
+import '../model/weather_response/weather_response.dart';
 
 class FetchWeatherApi {
-  final String apiKey = dotenv.env['API_KEY'] ?? '';
+  static final String apiKey = String.fromEnvironment('OPENWEATHER_API_KEY');
 
   WeatherResponse? weatherResponse;
 
