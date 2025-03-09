@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
+import '../../../search/presentation/providers/suggestion_provider.dart';
 import '../../data/model/weather_response/weather_response.dart';
 import '../providers/location_provider.dart';
+import '../providers/theme_provider.dart';
 
 class HeaderWidget extends StatefulWidget {
   final WeatherResponse weatherResponse;

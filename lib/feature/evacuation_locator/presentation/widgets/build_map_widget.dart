@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/presentation/providers/evacuation_locator_provider.dart';
 
 import '../../../../core/const/coordinates.dart';
+import '../providers/evacuation_locator_provider.dart';
 
 class BuildMapWidget extends StatefulWidget {
   const BuildMapWidget({super.key});

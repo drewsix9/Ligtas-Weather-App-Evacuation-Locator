@@ -1,6 +1,7 @@
 import 'package:latlong2/latlong.dart' as latlng;
 import 'package:latlong2/latlong.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/data/models/evacuation_center_model.dart';
+
+import '../../data/models/evacuation_center_model.dart';
 
 class HaversineDistanceCalculation {
   static double calcDistance(LatLng start, LatLng end) {

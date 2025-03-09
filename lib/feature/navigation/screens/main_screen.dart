@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 import '../../evacuation_locator/presentation/screens/evacuation_locator_screen.dart';
+import '../../single_weather/presentation/providers/theme_provider.dart';
 import '../../single_weather/presentation/screens/single_weather_screen.dart';
 
 class MainScreen extends StatefulWidget {

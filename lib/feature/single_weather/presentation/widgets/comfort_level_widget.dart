@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 
 import '../../../../core/utils/custom_colors.dart';
 import '../../data/model/weather_response/weather_response.dart';
+import '../providers/theme_provider.dart';
 
 class ComfortLevelWidget extends StatelessWidget {
   final WeatherResponse? weatherResponse;

@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pretty_print_json/pretty_print_json.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/data/services/fetch_weather.dart';
 
 import '../../data/model/weather_response/weather_response.dart';
+import '../../data/services/fetch_weather.dart';
 
 class LocationProvider with ChangeNotifier {
   bool _isLoading = true;

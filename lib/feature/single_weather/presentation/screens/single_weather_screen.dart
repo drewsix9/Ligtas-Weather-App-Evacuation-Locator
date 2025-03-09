@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/core/utils/env_config.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/theme_toggle_button.dart';
 
+import '../../../../core/utils/env_config.dart';
 import '../../../search/presentation/providers/suggestion_provider.dart';
 import '../../../search/presentation/widgets/show_city_selection_dialog.dart';
 import '../providers/location_provider.dart';
+import '../providers/theme_provider.dart';
 import '../widgets/comfort_level_widget.dart';
 import '../widgets/current_weather_widget.dart';
 import '../widgets/daily_foreacast_widget.dart';
@@ -16,6 +15,7 @@ import '../widgets/shimmers/current_weather_widget_shimmer.dart';
 import '../widgets/shimmers/daily_forecast_widget_shimmer.dart';
 import '../widgets/shimmers/header_widget_shimmer.dart';
 import '../widgets/shimmers/hourly_weather_widget_shimmer.dart';
+import '../widgets/theme_toggle_button.dart';
 
 class SingleWeatherScreen extends StatefulWidget {
   const SingleWeatherScreen({super.key});

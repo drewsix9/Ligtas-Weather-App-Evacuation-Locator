@@ -2,10 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/presentation/providers/evacuation_locator_provider.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/presentation/widgets/build_map_widget.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/presentation/widgets/prompt_box.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/theme_toggle_button.dart';
+
+import '../../../single_weather/presentation/widgets/theme_toggle_button.dart';
+import '../providers/evacuation_locator_provider.dart';
+import '../widgets/build_map_widget.dart';
+import '../widgets/prompt_box.dart';
 
 class EvacuationLocatorScreen extends StatefulWidget {
   const EvacuationLocatorScreen({super.key});

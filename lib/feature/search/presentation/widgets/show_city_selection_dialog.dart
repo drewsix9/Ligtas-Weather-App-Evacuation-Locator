@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/core/utils/custom_colors.dart';
-import 'package:weather_app_evac_locator/feature/search/data/services/fetch_query.dart';
-import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
+
+import '../../../../core/utils/custom_colors.dart';
+import '../../../single_weather/presentation/providers/location_provider.dart';
+import '../../../single_weather/presentation/providers/theme_provider.dart';
+import '../../data/services/fetch_query.dart';
+import '../providers/suggestion_provider.dart';
 
 void showCitySelectionDialog(
   BuildContext context,

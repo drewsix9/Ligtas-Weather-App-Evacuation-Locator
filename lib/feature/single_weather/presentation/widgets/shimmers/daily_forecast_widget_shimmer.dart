@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
+
+import '../../providers/theme_provider.dart';
 
 class DailyForecastWidgetShimmer extends StatelessWidget {
   const DailyForecastWidgetShimmer({super.key});

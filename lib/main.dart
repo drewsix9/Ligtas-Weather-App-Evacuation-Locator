@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/presentation/providers/evacuation_locator_provider.dart';
-import 'package:weather_app_evac_locator/feature/navigation/screens/main_screen.dart';
-import 'package:weather_app_evac_locator/feature/search/presentation/providers/suggestion_provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/location_provider.dart';
-import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
+
+import 'feature/evacuation_locator/presentation/providers/evacuation_locator_provider.dart';
+import 'feature/navigation/screens/main_screen.dart';
+import 'feature/search/presentation/providers/suggestion_provider.dart';
+import 'feature/single_weather/presentation/providers/location_provider.dart';
+import 'feature/single_weather/presentation/providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

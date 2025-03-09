@@ -7,9 +7,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http show get;
 import 'package:latlong2/latlong.dart' as latlng;
 import 'package:pretty_print_json/pretty_print_json.dart';
-import 'package:weather_app_evac_locator/feature/evacuation_locator/data/models/evacuation_center_model.dart';
 
 import '../../data/datasources/evacuation_centers.dart';
+import '../../data/models/evacuation_center_model.dart';
 import '../../data/models/route_response_model.dart';
 import '../../data/services/openrouteservice_api.dart';
 import '../../domain/usecases/haversine_distance_calculation.dart';
