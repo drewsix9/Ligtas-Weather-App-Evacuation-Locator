@@ -1,6 +1,7 @@
+import '../../../../core/utils/env_config.dart';
+
 class OpenRouteServiceApi {
-  static const String apiKey =
-      String.fromEnvironment('OPENROUTESERVICE_API_KEY');
+  static const String apiKey = EnvConfig.routeApiKey;
 
   static const String routeBaseUrl =
       'https://api.openrouteservice.org/v2/directions/driving-car';

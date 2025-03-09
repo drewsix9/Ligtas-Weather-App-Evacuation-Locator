@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:pretty_print_json/pretty_print_json.dart';
+import 'package:weather_app_evac_locator/core/utils/env_config.dart';
 import 'package:weather_app_evac_locator/feature/search/data/model/suggestion_response/suggestion_response.dart';
 
 class FetchQueryApi {
-  static const String apiKey = String.fromEnvironment('OPENWEATHER_API_KEY');
+  static const String apiKey = EnvConfig.weatherApiKey;
 
   SuggestionResponse? suggestionResponse;
 

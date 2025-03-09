@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app_evac_locator/core/utils/env_config.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/providers/theme_provider.dart';
 import 'package:weather_app_evac_locator/feature/single_weather/presentation/widgets/theme_toggle_button.dart';
 
@@ -27,8 +28,10 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
   late LocationProvider locationProvider;
   late SuggestionProvider suggestionProvider;
   late ThemeProvider themeProvider;
+
   @override
   void initState() {
+    EnvConfig.validateEnvConfig();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       locationProvider = context.read<LocationProvider>();

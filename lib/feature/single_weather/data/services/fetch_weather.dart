@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../../../../core/utils/env_config.dart';
 import '../model/weather_response/weather_response.dart';
 
 class FetchWeatherApi {
-  static const String apiKey = String.fromEnvironment('OPENWEATHER_API_KEY');
+  static const String apiKey = EnvConfig.weatherApiKey;
 
   WeatherResponse? weatherResponse;
 
