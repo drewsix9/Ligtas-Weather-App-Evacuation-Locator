@@ -22,6 +22,10 @@ class CurrentWeatherWidget extends StatelessWidget {
   Widget currentWeatherMoreDetailsWidget(BuildContext context) {
     final cardColor = Theme.of(context).cardColor;
     final textColor = Theme.of(context).textTheme.bodyMedium?.color;
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+    final iconSize = isSmallScreen ? 50.0 : 60.0;
+    final containerSize = isSmallScreen ? 50.0 : 60.0;
 
     return Column(
       children: [
@@ -31,9 +35,9 @@ class CurrentWeatherWidget extends StatelessWidget {
             Tooltip(
               message: "Wind Speed",
               child: Container(
-                height: 60,
-                width: 60,
-                padding: EdgeInsets.all(16),
+                height: containerSize,
+                width: containerSize,
+                padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(15),
@@ -44,9 +48,9 @@ class CurrentWeatherWidget extends StatelessWidget {
             Tooltip(
               message: "Precipitation",
               child: Container(
-                height: 60,
-                width: 60,
-                padding: EdgeInsets.all(16),
+                height: containerSize,
+                width: containerSize,
+                padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(15),
@@ -59,9 +63,9 @@ class CurrentWeatherWidget extends StatelessWidget {
             Tooltip(
               message: "Humidity",
               child: Container(
-                height: 60,
-                width: 60,
-                padding: EdgeInsets.all(16),
+                height: containerSize,
+                width: containerSize,
+                padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(15),
@@ -76,28 +80,37 @@ class CurrentWeatherWidget extends StatelessWidget {
           children: [
             SizedBox(
               height: 20,
-              width: 70,
+              width: isSmallScreen ? 60 : 70,
               child: Text(
                 "${weatherResponse.current!.windSpeed} m/s",
-                style: TextStyle(fontSize: 12, color: textColor),
+                style: TextStyle(
+                  fontSize: isSmallScreen ? 11 : 12,
+                  color: textColor,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
             SizedBox(
               height: 20,
-              width: 70,
+              width: isSmallScreen ? 60 : 70,
               child: Text(
                 "${weatherResponse.daily?[0].rain ?? 0} mm/h",
-                style: TextStyle(fontSize: 12, color: textColor),
+                style: TextStyle(
+                  fontSize: isSmallScreen ? 11 : 12,
+                  color: textColor,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
             SizedBox(
               height: 20,
-              width: 70,
+              width: isSmallScreen ? 60 : 70,
               child: Text(
                 "${weatherResponse.current!.humidity} %",
-                style: TextStyle(fontSize: 12, color: textColor),
+                style: TextStyle(
+                  fontSize: isSmallScreen ? 11 : 12,
+                  color: textColor,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -112,16 +125,22 @@ class CurrentWeatherWidget extends StatelessWidget {
     final dividerColor = Theme.of(context).dividerColor;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
     final secondaryTextColor = isDarkMode ? Colors.grey[400] : Colors.grey[600];
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Image.asset(
           "assets/weather_icons/${weatherResponse.current!.weather![0].icon}.png",
-          height: 80,
-          width: 80,
+          height: isSmallScreen ? 60 : 80,
+          width: isSmallScreen ? 60 : 80,
         ),
-        Container(height: 50, width: 1, color: dividerColor),
+        Container(
+          height: isSmallScreen ? 40 : 50,
+          width: 1,
+          color: dividerColor,
+        ),
         RichText(
           text: TextSpan(
             children: [
@@ -129,7 +148,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 text: "${weatherResponse.current!.temp!}°",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 68,
+                  fontSize: isSmallScreen ? 48 : 68,
                   color: textColor,
                 ),
               ),
@@ -137,7 +156,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 text: "${weatherResponse.current!.weather![0].description}",
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 14,
+                  fontSize: isSmallScreen ? 12 : 14,
                   color: secondaryTextColor,
                 ),
               ),

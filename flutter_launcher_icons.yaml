@@ -1,12 +1,12 @@
 # flutter pub run flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: "assets/app_icon/drrm.png"
+  image_path: "assets/app_icon/we-vacuate.jpg"
 
   android: "launcher_icon"
-  image_path_android: "assets/app_icon/drrm.png"
+  image_path_android: "assets/app_icon/we-vacuate.jpg"
   min_sdk_android: 21 # android min sdk min:16, default 21
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/app_icon/drrm.png"
+  adaptive_icon_foreground: "assets/app_icon/we-vacuate.jpg"
   # adaptive_icon_monochrome: "assets/icon/monochrome.png"
 
   ios: false

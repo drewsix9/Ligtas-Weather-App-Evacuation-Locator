@@ -25,6 +25,9 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+    final isMediumScreen = screenSize.width >= 600 && screenSize.width < 1200;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -36,6 +39,7 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
           icon: Icon(
             Icons.refresh,
             color: textColor,
+            size: isSmallScreen ? 20 : 24,
           ),
           onPressed: () {
             Provider.of<EvacuationLocatorProvider>(context, listen: false)
@@ -48,7 +52,7 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
           'Evacuation Locator',
           style: TextStyle(
             color: textColor,
-            fontSize: 20,
+            fontSize: isSmallScreen ? 18 : 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -85,7 +89,10 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
               if (provider.isProcessingRoutes) {
                 return Center(
                   child: Container(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.all(isSmallScreen ? 15 : 20),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: isSmallScreen ? 20 : 30,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(12),
@@ -105,18 +112,22 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
                               ? provider.processProgress
                               : null,
                         ),
-                        const SizedBox(height: 20),
-                        const Text(
+                        SizedBox(height: isSmallScreen ? 15 : 20),
+                        Text(
                           'Finding optimal evacuation route...',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: isSmallScreen ? 14 : 16,
                             fontWeight: FontWeight.bold,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: isSmallScreen ? 6 : 8),
                         Text(
                           'Analyzing closest centers',
-                          style: const TextStyle(fontSize: 14),
+                          style: TextStyle(
+                            fontSize: isSmallScreen ? 12 : 14,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
@@ -129,7 +140,7 @@ class _EvacuationLocatorScreenState extends State<EvacuationLocatorScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
               child: Consumer<EvacuationLocatorProvider>(
                 builder: (context, provider, child) {
                   return Visibility(

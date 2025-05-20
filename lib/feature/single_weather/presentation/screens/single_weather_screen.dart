@@ -51,6 +51,9 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
     final locationProvider = Provider.of<LocationProvider>(context);
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
     final dividerColor = Theme.of(context).dividerColor;
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+    final isMediumScreen = screenSize.width >= 600 && screenSize.width < 1200;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -78,7 +81,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
           'Weather',
           style: TextStyle(
             color: textColor,
-            fontSize: 24,
+            fontSize: isSmallScreen ? 20 : 24,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -87,7 +90,7 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
       body: SafeArea(
         child: Consumer<LocationProvider>(
           builder: (context, provider, child) {
-            final spacer = const SizedBox(height: 20);
+            final spacer = SizedBox(height: isSmallScreen ? 10 : 20);
             final divider = Container(
               height: 1,
               color: dividerColor,
@@ -95,40 +98,44 @@ class _SingleWeatherScreenState extends State<SingleWeatherScreen> {
 
             if (provider.checkLoading) {
               return ListView(
-                children: const [
-                  SizedBox(height: 20),
+                children: [
+                  SizedBox(height: isSmallScreen ? 10 : 20),
                   HeaderWidgetShimmer(),
                   CurrentWeatherWidgetShimmer(),
-                  SizedBox(height: 20),
+                  SizedBox(height: isSmallScreen ? 10 : 20),
                   HourlyWeatherWidgetShimmer(),
                   DailyForecastWidgetShimmer(),
                 ],
               );
             }
 
-            return ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                spacer,
-                HeaderWidget(
-                  weatherResponse: provider.weatherResponse!,
-                ),
-                CurrentWeatherWidget(
-                  weatherResponse: provider.weatherResponse!,
-                ),
-                spacer,
-                HourlyWeatherWidget(
-                  weatherResponse: provider.weatherResponse!,
-                ),
-                DailyForecastWidget(
-                  weatherResponse: provider.weatherResponse!,
-                ),
-                divider,
-                const SizedBox(height: 10),
-                ComfortLevelWidget(
-                  weatherResponse: provider.weatherResponse!,
-                ),
-              ],
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    spacer,
+                    HeaderWidget(
+                      weatherResponse: provider.weatherResponse!,
+                    ),
+                    CurrentWeatherWidget(
+                      weatherResponse: provider.weatherResponse!,
+                    ),
+                    spacer,
+                    HourlyWeatherWidget(
+                      weatherResponse: provider.weatherResponse!,
+                    ),
+                    DailyForecastWidget(
+                      weatherResponse: provider.weatherResponse!,
+                    ),
+                    divider,
+                    const SizedBox(height: 10),
+                    ComfortLevelWidget(
+                      weatherResponse: provider.weatherResponse!,
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),

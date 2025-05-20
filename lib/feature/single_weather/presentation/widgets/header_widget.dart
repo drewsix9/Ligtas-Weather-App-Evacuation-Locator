@@ -157,15 +157,20 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
     final isDarkMode = Provider.of<ThemeProvider>(context).isToggled;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
-    final secondaryTextColor = isDarkMode ? Colors.grey[400] : Colors.grey[700];
+    final secondaryTextColor = isDarkMode ? Colors.grey[400] : Colors.grey[600];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(left: 20, right: 20),
+          margin: EdgeInsets.only(
+            left: isSmallScreen ? 15 : 20,
+            right: isSmallScreen ? 15 : 20,
+          ),
           alignment: Alignment.topLeft,
           child: isLoadingCity
               ? Row(
@@ -173,15 +178,15 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     Text(
                       city,
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: isSmallScreen ? 28 : 35,
                         height: 2,
                         color: textColor,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: isSmallScreen ? 8 : 10),
                     SizedBox(
-                      height: 20,
-                      width: 20,
+                      height: isSmallScreen ? 16 : 20,
+                      width: isSmallScreen ? 16 : 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(
@@ -194,19 +199,23 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               : Text(
                   city,
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: isSmallScreen ? 28 : 35,
                     height: 2,
                     color: textColor,
                   ),
                 ),
         ),
         Container(
-          margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          margin: EdgeInsets.only(
+            left: isSmallScreen ? 15 : 20,
+            right: isSmallScreen ? 15 : 20,
+            bottom: isSmallScreen ? 15 : 20,
+          ),
           alignment: Alignment.topLeft,
           child: Text(
             "as of $formattedDateTime ($timeZoneName)",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: isSmallScreen ? 12 : 14,
               color: secondaryTextColor,
               height: 1.5,
               fontStyle: FontStyle.italic,

@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'weather_app_evac_locator',
+      title: 'WeVacuate',
       theme: Provider.of<ThemeProvider>(context).currentTheme,
       home: MainScreen(),
     );

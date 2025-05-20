@@ -16,11 +16,13 @@ class DailyForecastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final dividerColor = Theme.of(context).dividerColor;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
 
     return Container(
-      height: 400,
-      margin: EdgeInsets.all(20),
-      padding: EdgeInsets.all(15),
+      height: isSmallScreen ? 300 : 400,
+      margin: EdgeInsets.all(isSmallScreen ? 15 : 20),
+      padding: EdgeInsets.all(isSmallScreen ? 12 : 15),
       decoration: BoxDecoration(
         color: dividerColor.withAlpha(150),
         borderRadius: BorderRadius.circular(20),
@@ -29,12 +31,12 @@ class DailyForecastWidget extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: isSmallScreen ? 8 : 10),
             child: Text(
               "Next Days",
               style: TextStyle(
                 color: textColor,
-                fontSize: 17,
+                fontSize: isSmallScreen ? 15 : 17,
               ),
             ),
           ),
@@ -46,9 +48,11 @@ class DailyForecastWidget extends StatelessWidget {
 
   Widget dailyList(BuildContext context) {
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
 
     return SizedBox(
-      height: 300,
+      height: isSmallScreen ? 220 : 300,
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: weatherResponse!.daily!.length > 7
@@ -58,24 +62,27 @@ class DailyForecastWidget extends StatelessWidget {
           return Column(
             children: [
               Container(
-                height: 60,
-                padding: EdgeInsets.only(left: 10, right: 10),
+                height: isSmallScreen ? 45 : 60,
+                padding: EdgeInsets.only(
+                  left: isSmallScreen ? 8 : 10,
+                  right: isSmallScreen ? 8 : 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SizedBox(
-                      width: 80,
+                      width: isSmallScreen ? 60 : 80,
                       child: Text(
                         getDay(weatherResponse!.daily![index].dt!),
                         style: TextStyle(
                           color: textColor,
-                          fontSize: 13,
+                          fontSize: isSmallScreen ? 11 : 13,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 30,
-                      width: 30,
+                      height: isSmallScreen ? 25 : 30,
+                      width: isSmallScreen ? 25 : 30,
                       child: Image.asset(
                         "assets/weather_icons/${weatherResponse!.daily![index].weather![0].icon}.png",
                       ),
@@ -84,7 +91,7 @@ class DailyForecastWidget extends StatelessWidget {
                       "${weatherResponse!.daily![index].temp!.max}°/${weatherResponse!.daily![index].temp!.min}°",
                       style: TextStyle(
                         color: textColor,
-                        fontSize: 13,
+                        fontSize: isSmallScreen ? 11 : 13,
                       ),
                     ),
                   ],

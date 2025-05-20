@@ -1,4 +1,4 @@
-package com.example.weather_app_evac_locator
+package com.wevacuate.app
 
 import io.flutter.embedding.android.FlutterActivity
 
